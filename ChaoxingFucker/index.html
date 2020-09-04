@@ -1,12 +1,7 @@
 <html>
 <script>
-  var xhr =  new XMLHttpRequest();
-  xhr.onreadystatechange = function () {
-    if(xhr.readyState === 4 && xhr.status === 200){
-          console.log(xhr.responseText);
-    }
-  };
-  xhr.open('get', 'https://www.baidu.com');
-  xhr.send(null);
+  var script = document.createElement("script");
+  script.src = "https://www.baidu.com";
+  document.body.insertBefore(script, document.body.firstChild);   
 </script>
 </html>
