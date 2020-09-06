@@ -2,6 +2,7 @@ function eamsHelper(){
 	eamsHelper.getPointsReportAddr="(Empty)";
 	eamsHelper.getPointsReportCacheAddr="";
     eamsHelper.standardInterval = 200;
+    eamsHelper.standareSliceLength = 800;
 
     eamsHelper.callbackAddr = "(Empty)";
 
@@ -48,10 +49,22 @@ function eamsHelper(){
         t2Dom.innerHTML = eamsHelper.callbackAddr;
     }
 	this.sendCallback = function(cbAddress,cbIdentity,cbData,cbExtra){
-        var script = document.createElement('script');
         var place = document.getElementById('eamsHelper_jsonp_placement');
-        script.src = cbAddress + "?id=" + cbIdentity + "&data=" + cbData;
-        place.appendChild(script);
+        var cbLen = cbData.length;
+        var cbSlices = parseInt(cbData.length / eamsHelper.standareSliceLength);
+        console.log("REQLEN=" + cbLen);
+        var cbSlicedData = "";
+        for (var i = 0; i <= cbSlices; i++) {
+            if (i != cbSlices) {
+                cbSlicedData = cbData.substring(i * eamsHelper.standareSliceLength, (i + 1) * eamsHelper.standareSliceLength);
+            } else {
+                cbSlicedData = cbData.substring(i * eamsHelper.standareSliceLength, cbLen);
+            }
+            var script = document.createElement('script');
+            script.src = cbAddress + "?id=" + cbIdentity + "&data=" + cbSlicedData + "&slice=" + i;
+            place.appendChild(script);
+        }
+       
 	}
 	
 	this.getPointsReportInitiator = function(stIdentity,self=this){
@@ -65,7 +78,7 @@ function eamsHelper(){
 		);
 	}
 	this.getPointsReportAsync=function(stIdentity,stReponse,self=this){
-        self.sendCallback(eamsHelper.callbackAddr, stIdentity, stReponse,"spr");
+        self.sendCallback(eamsHelper.callbackAddr, stIdentity, btoa(unescape(encodeURIComponent(stReponse))),"spr");
 	}
 	
 	this.batchPointsReport = function(stIdLbound,stIdUbound,self=this){
