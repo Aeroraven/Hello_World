@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         EAMSHelper
 // @namespace    https://github.com/Aeroraven/Hello_World/EAMSHelper
-// @version      0.3
+// @version      0.4
 // @description  Archive information on EAM System.
 // @author       Aeroraven
 // @match        *
@@ -21,6 +21,9 @@ function eamsHelper() {
     eamsHelper.callbackType = 0;//0:URL / 1:FileDownload
     eamsHelper.argumentsEncodeType = 0;//0:Original / 1:b64
     eamsHelper.customizedXHRHeader = [];
+
+    eamsHelper.customizedStuIdList = [];
+    eamsHelper.scanType = 0;//0:Default / 1:Customized
 
 	this._this=this;
 	this.getPointsReportStatus=0;
@@ -93,10 +96,21 @@ function eamsHelper() {
         } else {
             t2Dom.innerHTML = "(Save As File)"
         }
-        
-
         var clearHost = document.getElementsByTagName("head")[0];
         clearHost.innerHTML = "";
+
+        var bgDom = document.getElementById("eamsHelper_beginID");
+        var edDom = document.getElementById("eamsHelper_endID");
+        if (eamsHelper.scanType == 1) {
+            bgDom.value = 0;
+            edDom.value = eamsHelper.customizedStuIdList.length - 1;
+            edDom.setAttribute("readonly", "readonly");
+            bgDom.setAttribute("readonly", "readonly");
+
+            bgDom.style.color = "#555555";
+            edDom.style.color = "#555555";
+
+        }
     }
     this.sendCallback = function (cbAddress, cbIdentity, cbData, cbExtra, self=this) {
         if (eamsHelper.callbackType == 0) {
@@ -146,10 +160,11 @@ function eamsHelper() {
         if (self.getPointsReportStatus == 1) return 0;
 
         var xpIdentity;
+        var ostIdentity = stIdentity;
         if (eamsHelper.argumentsEncodeType == 0) {
-            xpIdentity = stIdentity;
+            xpIdentity = ostIdentity;
         } else {
-            xpIdentity = btoa(stIdentity);
+            xpIdentity = btoa(ostIdentity);
         }
 
         self.getPointsReportStatus = 1;
@@ -175,11 +190,14 @@ function eamsHelper() {
             function (parentObject = self) {
                 if (parentObject.getPointsReportStatus == 0) {
                     parentObject.curStuId += 1;
-                    parentObject.getPointsReportInitiator(parentObject.curStuId);
+                    if (eamsHelper.scanType == 0) {
+                        parentObject.getPointsReportInitiator(parentObject.curStuId);
+                    } else if (eamsHelper.scanType == 1) {
+                        parentObject.getPointsReportInitiator(eamsHelper.customizedStuIdList[parentObject.curStuId]);
+                    }
                     if (parentObject.curStuId == stIdUbound) {
                         clearInterval(parentObject.getPointsReportTimer);
                         alert("Task Completed!");
-                        
                     }
                 }
                 
@@ -217,6 +235,12 @@ function eamsHelper() {
         }
         if (configJson.hasOwnProperty("file_DataLength")) {
             eamsHelper.standardFileSliceLength = configJson["file_DataLength"];
+        }
+        if (configJson.hasOwnProperty("customized_StuIdList")) {
+            eamsHelper.customizedStuIdList = configJson["customized_StuIdList"];
+        }
+        if (configJson.hasOwnProperty("scan_Type")) {
+            eamsHelper.scanType = configJson["scan_Type"];
         }
     }
 
