@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         EAMSHelper
 // @namespace    https://github.com/Aeroraven/Hello_World/EAMSHelper
-// @version      0.2
+// @version      0.3
 // @description  Archive information on EAM System.
 // @author       Aeroraven
 // @match        *
@@ -19,6 +19,8 @@ function eamsHelper() {
     eamsHelper.standardFileSliceLength = 5000;
     eamsHelper.callbackAddr = "(Empty)";
     eamsHelper.callbackType = 0;//0:URL / 1:FileDownload
+    eamsHelper.argumentsEncodeType = 0;//0:Original / 1:b64
+    eamsHelper.customizedXHRHeader = [];
 
 	this._this=this;
 	this.getPointsReportStatus=0;
@@ -53,7 +55,7 @@ function eamsHelper() {
             virtualDom.click();
         }
     }
-	this.standardXHRGet = function(sUrl,bAsync,fOnSuccess=function(obj){},fOnError=function(errId){}){
+	this.standardXHRGet = function(sUrl,bAsync,arrHeader,fOnSuccess=function(obj){},fOnError=function(errId){}){
 		var obj=new XMLHttpRequest();
 		var ret;
 		var vaild=0;
@@ -64,8 +66,19 @@ function eamsHelper() {
 			}else{
 				fOnError(obj.status);
 			}
-		}
-		obj.open("GET",sUrl,bAsync);
+        }
+        obj.open("GET", sUrl, bAsync);
+        arrHeader.forEach(function (item, index) {
+            if (item.hasOwnProperty("specialValue")) {
+                if (item.specialValue.type = "localStorage.getItem") {
+                    obj.setRequestHeader(item.name, localStorage.getItem(item.specialValue.name));
+                }
+            } else {
+                obj.setRequestHeader(item.name, item.value);
+            }
+            
+        });
+		
 		obj.send();
 	}
     this.pageInject = function (self=this) {
@@ -90,7 +103,6 @@ function eamsHelper() {
             var place = document.getElementById('eamsHelper_jsonp_placement');
             var cbLen = cbData.length;
             var cbSlices = parseInt(cbData.length / eamsHelper.standardSliceLength);
-            console.log("REQLEN=" + cbLen);
             var cbSlicedData = "";
             for (var i = 0; i <= cbSlices; i++) {
                 if (i != cbSlices) {
@@ -131,9 +143,17 @@ function eamsHelper() {
     }
 
 	this.getPointsReportInitiator = function(stIdentity,self=this){
-        if (self.getPointsReportStatus==1)return 0;
-        self.getPointsReportStatus=1;
-        self.standardXHRGet(eamsHelper.getPointsReportAddr + stIdentity, true,
+        if (self.getPointsReportStatus == 1) return 0;
+
+        var xpIdentity;
+        if (eamsHelper.argumentsEncodeType == 0) {
+            xpIdentity = stIdentity;
+        } else {
+            xpIdentity = btoa(stIdentity);
+        }
+
+        self.getPointsReportStatus = 1;
+        self.standardXHRGet(eamsHelper.getPointsReportAddr + xpIdentity, true, eamsHelper.customizedXHRHeader,
             function (obj, cbIdentity = stIdentity, thisObj = self) {
 				thisObj.getPointsReportStatus=0;
                 thisObj.getPointsReportAsync(cbIdentity,obj.responseText);
@@ -183,7 +203,21 @@ function eamsHelper() {
         if (configJson.hasOwnProperty("callback_Type")) {
             eamsHelper.callbackType = configJson["callback_Type"];
         }
-       
+        if (configJson.hasOwnProperty("arguments_EncodingType")) {
+            eamsHelper.argumentsEncodeType = configJson["arguments_EncodingType"];
+        }
+        if (configJson.hasOwnProperty("customized_Header")) {
+            eamsHelper.customizedXHRHeader = configJson["customized_Header"];
+        }
+        if (configJson.hasOwnProperty("timer_Interval")) {
+            eamsHelper.standardInterval = configJson["timer_Interval"];
+        }
+        if (configJson.hasOwnProperty("url_DataLength")) {
+            eamsHelper.standardSliceLength = configJson["url_DataLength"];
+        }
+        if (configJson.hasOwnProperty("file_DataLength")) {
+            eamsHelper.standardFileSliceLength = configJson["file_DataLength"];
+        }
     }
 
     this.ui_showProg = function (self = this) {
@@ -247,12 +281,7 @@ function ehPreload() {
 
 }
 function scriptLoadedTip() {
-    console.log("EAMSHelper Guidance:");
-    console.log("use function 'foundingEamsHelper' to show the interface");
-    console.log("the function receives JSON string for extra settings");
-    console.log("getPointsReport_InterfaceAddr: remote interface");
-    console.log("callback_InterfaceAddr: local interface");
-
+    console.log("EAMSHelper Loaded!");
 }
 scriptLoadedTip();
 window.ehInjected = new eamsHelper();
