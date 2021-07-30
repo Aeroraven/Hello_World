@@ -122,7 +122,7 @@ max_score = 0
 for i in range(10):
     print(f"Epoch:{i}")
     train_logs = train_epoch.run(train_loader)
-    valid_logs = valid_epoch.run(valid_loader)
+    valid_logs = valid_epoch.run(test_loader)
     if valid_logs['iou_score'] > max_score:
         max_score = valid_logs['iou_score']
         torch.save(model, './model_est.pth')
