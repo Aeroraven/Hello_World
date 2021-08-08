@@ -9,6 +9,7 @@ import numpy as np
 import os
 import PIL.Image as pimg
 import time
+import segmentation_models_pytorch as smp
 
 
 def pil_visualize(**kwargs):
@@ -52,7 +53,7 @@ class ArvnDataset_Pet(torchdata.Dataset):
                  image_src: str,
                  classes: list = None,
                  argumentation: callable = None,
-                 preprocessing: callable = None,):
+                 preprocessing: callable = None, ):
         if classes is None:
             classes = []
         self.data_name = []
@@ -79,9 +80,39 @@ class ArvnDataset_Pet(torchdata.Dataset):
             image = sp['image']
         if self.preprocessing:
             image = self.preprocessing(image=image)['image']
+        image = torch.tensor(image)
         return image, label
+
+
+class PetNet(nn.Module):
+    def __init__(self):
+        super(PetNet, self).__init__()
+        self.encoder = smp.Unet(
+            encoder_name="resnet34",
+            encoder_weights="imagenet",
+            classes=2
+        ).encoder
+        self.pool = nn.AdaptiveAvgPool2d(output_size=(1, 1))
+        self.flatten = nn.Flatten()
+        self.fullconnect = nn.Linear(in_features=512, out_features=2)
+
+    def forward(self, x):
+        x = self.encoder(x)[-1]
+        x = self.pool(x)
+        x = self.flatten(x)
+        x = self.fullconnect(x)
+        return x
 
 
 data_dir = r"D:\PetImages"
 train_dir = data_dir
-train_dataset = ArvnDataset_Pet(train_dir, ["Cat", "Dog"], pet_argumentation())
+preproc_fn = smp.encoders.get_preprocessing_fn("resnet34")
+train_dataset = ArvnDataset_Pet(train_dir, ["Cat", "Dog"], pet_argumentation(), get_preprocessing(preproc_fn))
+
+image, label = train_dataset[0]
+model = PetNet().to("cpu")
+image = image.unsqueeze(0)
+image = torch.cat([image, image, image], dim=0)
+y = model(image)
+print(y)
+print(y.shape)

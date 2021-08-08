@@ -1,2 +1,5 @@
 *.pth
-/.idea/
+.idea/
+LearningPytorch/.idea/*
+LearningPytorch/.idea/workspace.xml
+LearningPytorch/.idea/workspace.xml
