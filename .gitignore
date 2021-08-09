@@ -5,3 +5,9 @@ LearningPytorch/.idea/workspace.xml
 LearningPytorch/.idea/workspace.xml
 *.xml
 *.tar
+LearningPytorch\learning-5-transfer-learning-preparations\util\*
+LearningPytorch/learning-5-transfer-learning-preparations/util/__init__.py
+LearningPytorch/learning-5-transfer-learning-preparations/util/meter.py
+LearningPytorch/learning-5-transfer-learning-preparations/util/loss.py
+LearningPytorch/learning-5-transfer-learning-preparations/util/run.py
+LearningPytorch/learning-5-transfer-learning-preparations/util/metrics.py
