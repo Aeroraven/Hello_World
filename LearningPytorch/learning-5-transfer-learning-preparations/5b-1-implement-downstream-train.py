@@ -21,6 +21,7 @@ from util import loss
 from util import run
 import pickle
 from util import save
+import random
 
 
 def visualize_assist(**kwargs):
@@ -148,8 +149,10 @@ class SegDataset(torch.utils.data.Dataset):
             classes=None,
             augmentation=None,
             preprocessing=None,
+            maxsize=65536
     ):
         self.ids = os.listdir(dir_img)
+        random.shuffle(self.ids)
         self.images_fps = [os.path.join(dir_img, image_id) for image_id in self.ids]
         self.masks_fps = [os.path.join(dir_mask, image_id) for image_id in self.ids]
 
@@ -158,6 +161,7 @@ class SegDataset(torch.utils.data.Dataset):
 
         self.augmentation = augmentation
         self.preprocessing = preprocessing
+        self.maxsize=maxsize
 
     def get_original_image(self, i):
         fname = self.images_fps[i]
@@ -189,7 +193,7 @@ class SegDataset(torch.utils.data.Dataset):
 
     def __len__(self):
         # return len(self.ids)
-        return min(800,len(self.ids))
+        return min(self.maxsize,len(self.ids))
 
 
 def visualize_output(dataset, model, modelp, idx):
@@ -235,17 +239,19 @@ train_dataset = SegDataset(
     r"D:\2\train\masks",
     augmentation=pet_augmentation(),
     preprocessing=get_preprocessing(preproc_fn),
-    classes=['tissue', 'pancreas']
+    classes=['tissue', 'pancreas'],
+    maxsize=800
 )
 valid_dataset = SegDataset(
     r"D:\2\test\imgs",
     r"D:\2\test\masks",
     augmentation=pet_augmentation(),
     preprocessing=get_preprocessing(preproc_fn),
-    classes=['tissue', 'pancreas']
+    classes=['tissue', 'pancreas'],
+    maxsize=800
 )
-train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=2)
-valid_loader = torch.utils.data.DataLoader(valid_dataset, batch_size=2)
+train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=2,shuffle=True)
+valid_loader = torch.utils.data.DataLoader(valid_dataset, batch_size=2,shuffle=True)
 data_root = r'D:\2'
 x_train_dir = os.path.join(data_root, 'train/imgs')
 y_train_dir = os.path.join(data_root, 'train/masks')
