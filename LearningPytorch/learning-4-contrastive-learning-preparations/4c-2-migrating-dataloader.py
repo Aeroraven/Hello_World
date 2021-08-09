@@ -35,7 +35,7 @@ def get_preprocessing(preprocessing_fn):
     return albu.Compose(_transform)
 
 
-def pet_argumentation():
+def pet_augmentation():
     transform_list = [
         albu.Resize(100, 100),
         albu.HorizontalFlip(p=0.5),
@@ -52,13 +52,13 @@ class ArvnDataset_Pet_Constrastive(torchdata.Dataset):
     def __init__(self,
                  image_src: str,
                  classes: list = None,
-                 argumentation: callable = None,
+                 augmentation: callable = None,
                  preprocessing: callable = None,):
         if classes is None:
             classes = []
         self.data_name = []
         self.classes = classes
-        self.argumentation = argumentation
+        self.augmentation = augmentation
         self.preprocessing = preprocessing
         for i in range(len(self.classes)):
             file_list = os.listdir(image_src + "/" + self.classes[i])
@@ -76,9 +76,9 @@ class ArvnDataset_Pet_Constrastive(torchdata.Dataset):
         image = np.array(image)
         image2 = image.copy()
         label = self.data_name[item][1]
-        if self.argumentation:
-            sp = self.argumentation(image=image)
-            sp2 = self.argumentation(image=image2)
+        if self.augmentation:
+            sp = self.augmentation(image=image)
+            sp2 = self.augmentation(image=image2)
             image = sp['image']
             image2 = sp2['image']
         if self.preprocessing:
@@ -90,7 +90,7 @@ class ArvnDataset_Pet_Constrastive(torchdata.Dataset):
 
 data_dir = r"D:\PetImages"
 train_dir = data_dir
-train_dataset = ArvnDataset_Pet_Constrastive(train_dir, ["Cat", "Dog"], pet_argumentation())
+train_dataset = ArvnDataset_Pet_Constrastive(train_dir, ["Cat", "Dog"], pet_augmentation())
 
 train_dataloader = torch.utils.data.DataLoader(train_dataset,batch_size=50,pin_memory=True,shuffle=False,drop_last=True)
 y=None

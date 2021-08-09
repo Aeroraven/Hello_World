@@ -18,7 +18,7 @@ def visualize_help(**kwargs):
     plt.show()
 
 
-def dataset_argumentation():
+def dataset_augmentation():
     transform_list = [
         albu.HorizontalFlip(p=0.5),
         albu.VerticalFlip(p=0.5)
@@ -31,12 +31,12 @@ class LvDataset(torchdata.Dataset):
                  img_dir: str,
                  mask_dir: str,
                  class_idx: list,
-                 argumentation: callable = None):
+                 augmentation: callable = None):
         self.data_file_list = os.listdir(img_dir)
         self.data_path_list = [img_dir + '/' + x for x in self.data_file_list]
         self.mask_path_list = [mask_dir + '/' + x for x in self.data_file_list]
         self.classes = class_idx
-        self.argumentation = argumentation()
+        self.augmentation = augmentation()
 
     def __getitem__(self, item: int):
         image = cv.imread(self.data_path_list[item])
@@ -45,8 +45,8 @@ class LvDataset(torchdata.Dataset):
         masks = [(mask == x) for x in self.classes]
         mask_extracted = np.stack(masks, axis=-1).astype('float')
 
-        if self.argumentation:
-            arg_sample = self.argumentation(image=image, mask=mask_extracted)
+        if self.augmentation:
+            arg_sample = self.augmentation(image=image, mask=mask_extracted)
             image, mask_extracted = arg_sample['image'], arg_sample['mask']
 
         return image, mask_extracted
@@ -57,7 +57,7 @@ class LvDataset(torchdata.Dataset):
 
 x_train_path = r"D:\liver2\liver2\test\imgs"
 y_train_path = r"D:\liver2\liver2\test\masks"
-train_dataset = LvDataset(x_train_path, y_train_path, [1], dataset_argumentation)
+train_dataset = LvDataset(x_train_path, y_train_path, [1], dataset_augmentation)
 
 rnd_x, rnd_y = train_dataset[24]
 visualize_help(image=rnd_x, mask=rnd_y.squeeze())

@@ -36,7 +36,7 @@ def get_preprocessing(preprocessing_fn):
     return albu.Compose(_transform)
 
 
-def pet_argumentation():
+def pet_augmentation():
     transform_list = [
         albu.Resize(100, 100),
         albu.HorizontalFlip(p=0.5),
@@ -52,13 +52,13 @@ class ArvnDataset_Pet(torchdata.Dataset):
     def __init__(self,
                  image_src: str,
                  classes: list = None,
-                 argumentation: callable = None,
+                 augmentation: callable = None,
                  preprocessing: callable = None, ):
         if classes is None:
             classes = []
         self.data_name = []
         self.classes = classes
-        self.argumentation = argumentation
+        self.augmentation = augmentation
         self.preprocessing = preprocessing
         for i in range(len(self.classes)):
             file_list = os.listdir(image_src + "/" + self.classes[i])
@@ -75,8 +75,8 @@ class ArvnDataset_Pet(torchdata.Dataset):
         image = pimg.open(self.data_name[item][2] + "/" + self.data_name[item][0]).convert("RGB")
         image = np.array(image)
         label = self.data_name[item][1]
-        if self.argumentation:
-            sp = self.argumentation(image=image)
+        if self.augmentation:
+            sp = self.augmentation(image=image)
             image = sp['image']
         if self.preprocessing:
             image = self.preprocessing(image=image)['image']
@@ -137,7 +137,7 @@ time_st = time.time()
 data_dir = r"D:\PetImages"
 train_dir = data_dir
 preproc_fn = smp.encoders.get_preprocessing_fn("resnet34")
-train_dataset = ArvnDataset_Pet(train_dir, ["Cat", "Dog"], pet_argumentation(),get_preprocessing(preproc_fn))
+train_dataset = ArvnDataset_Pet(train_dir, ["Cat", "Dog"], pet_augmentation(),get_preprocessing(preproc_fn))
 train_dataloader = torchdata.DataLoader(train_dataset, batch_size=50)
 model = PetNet().to("cuda")
 loss = nn.CrossEntropyLoss()

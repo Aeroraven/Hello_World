@@ -9,6 +9,10 @@ import numpy as np
 import os
 import PIL.Image as pimg
 import time
+import moco.loader
+import moco.builder as moco_builder
+import math
+import shutil
 import segmentation_models_pytorch as smp
 
 
@@ -38,17 +42,18 @@ def get_preprocessing(preprocessing_fn):
 
 def pet_augmentation():
     transform_list = [
-        albu.Resize(100, 100),
+        albu.Resize(320, 320),
         albu.HorizontalFlip(p=0.5),
         albu.ToSepia(p=0.2),
         albu.ToGray(p=0.3),
         albu.RandomRotate90(p=0.5),
-        albu.VerticalFlip(p=0.2)
+        albu.VerticalFlip(p=0.2),
+        albu.GaussianBlur(blur_limit=11, p=0.5, always_apply=False)
     ]
     return albu.Compose(transform_list)
 
 
-class ArvnDataset_Pet(torchdata.Dataset):
+class ArvnDataset_Pet_Constrastive(torchdata.Dataset):
     def __init__(self,
                  image_src: str,
                  classes: list = None,
@@ -74,14 +79,38 @@ class ArvnDataset_Pet(torchdata.Dataset):
     def __getitem__(self, item):
         image = pimg.open(self.data_name[item][2] + "/" + self.data_name[item][0]).convert("RGB")
         image = np.array(image)
+        image2 = image.copy()
         label = self.data_name[item][1]
         if self.augmentation:
             sp = self.augmentation(image=image)
+            sp2 = self.augmentation(image=image2)
             image = sp['image']
+            image2 = sp2['image']
         if self.preprocessing:
             image = self.preprocessing(image=image)['image']
-        image = torch.tensor(image)
-        return image, label
+            image2 = self.preprocessing(image=image2)['image']
+
+        return [image, image2], label
+
+
+class PetNet_V2(nn.Module):
+    def __init__(self, num_classes=128):
+        super(PetNet_V2, self).__init__()
+        self.encoder = smp.Unet(
+            encoder_name="resnet34",
+            encoder_weights="imagenet",
+            classes=2
+        ).encoder
+        self.pool = nn.AdaptiveAvgPool2d(output_size=(1, 1))
+        self.flatten = nn.Flatten()
+        self.fullconnect = nn.Linear(in_features=512, out_features=128)
+
+    def forward(self, x):
+        x = self.encoder(x)[-1]
+        x = self.pool(x)
+        x = self.flatten(x)
+        x = self.fullconnect(x)
+        return x
 
 
 class PetNet(nn.Module):
@@ -103,16 +132,4 @@ class PetNet(nn.Module):
         x = self.fullconnect(x)
         return x
 
-
-data_dir = r"D:\PetImages"
-train_dir = data_dir
-preproc_fn = smp.encoders.get_preprocessing_fn("resnet34")
-train_dataset = ArvnDataset_Pet(train_dir, ["Cat", "Dog"], pet_augmentation(), get_preprocessing(preproc_fn))
-
-image, label = train_dataset[0]
-model = PetNet().to("cpu")
-image = image.unsqueeze(0)
-image = torch.cat([image, image, image], dim=0)
-y = model(image)
-print(y)
-print(y.shape)
+modelx = torch.load("moco-pancreas-02.pth.tar")

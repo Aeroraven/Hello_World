@@ -1,4 +1,3 @@
-# Stage 3 Period 1
 import cv2 as cv
 import torch
 import torch.nn as nn
@@ -10,6 +9,8 @@ import numpy as np
 import os
 import PIL.Image as pimg
 import time
+import segmentation_models_pytorch as smp
+
 
 def pil_visualize(**kwargs):
     n = len(kwargs)
@@ -19,6 +20,20 @@ def pil_visualize(**kwargs):
         plt.imshow(image)
         plt.title(name)
     plt.show()
+
+
+def to_tensor(x, **kwargs):
+    if isinstance(x, torch.Tensor):
+        return x.permute(2, 0, 1).to(torch.float)
+    return x.transpose(2, 0, 1).astype('float32')
+
+
+def get_preprocessing(preprocessing_fn):
+    _transform = [
+        albu.Lambda(image=preprocessing_fn),
+        albu.Lambda(image=to_tensor, mask=to_tensor),
+    ]
+    return albu.Compose(_transform)
 
 
 def pet_augmentation():
@@ -37,12 +52,14 @@ class ArvnDataset_Pet(torchdata.Dataset):
     def __init__(self,
                  image_src: str,
                  classes: list = None,
-                 augmentation: callable = None):
+                 augmentation: callable = None,
+                 preprocessing: callable = None, ):
         if classes is None:
             classes = []
         self.data_name = []
         self.classes = classes
         self.augmentation = augmentation
+        self.preprocessing = preprocessing
         for i in range(len(self.classes)):
             file_list = os.listdir(image_src + "/" + self.classes[i])
             index_list = [i for _ in range(len(file_list))]
@@ -55,52 +72,35 @@ class ArvnDataset_Pet(torchdata.Dataset):
         return len(self.data_name)
 
     def __getitem__(self, item):
-        # image = cv.imread(self.data_name[item][2] + "/" + self.data_name[item][0])
         image = pimg.open(self.data_name[item][2] + "/" + self.data_name[item][0]).convert("RGB")
         image = np.array(image)
         label = self.data_name[item][1]
-        # try:
-        #     image = cv.cvtColor(image, cv.COLOR_BGR2RGB)
-        # except cv.error:
-        #     print(self.data_name[item][2] + "/" + self.data_name[item][0])
         if self.augmentation:
             sp = self.augmentation(image=image)
             image = sp['image']
-        image = np.array(image)
-        image = image.transpose(2, 0, 1)
-        image = torch.ByteTensor(image) / 256
+        if self.preprocessing:
+            image = self.preprocessing(image=image)['image']
+        image = torch.tensor(image)
         return image, label
 
 
-class PetClassifier(nn.Module):
+class PetNet(nn.Module):
     def __init__(self):
-        super(PetClassifier, self).__init__()
-        self.layer_conv1 = nn.Conv2d(3, 6, 5)  # 2~98 => 96*96
-        self.layer_actv1 = nn.ReLU()
-        self.layer_pool1 = nn.MaxPool2d(2, 2)  # 48*48
-        self.layer_conv2 = nn.Conv2d(6, 16, 5)  # 2~46 => 44*44
-        self.layer_actv2 = nn.ReLU()
-        self.layer_pool2 = nn.MaxPool2d(2, 2)  # 16*22*
-        self.layer_flatten = nn.Flatten()
-        self.layer_fc1 = nn.Linear(16 * 22 * 22, 1024)
-        self.layer_fcr1 = nn.ReLU()
-        self.layer_fc2 = nn.Linear(1024, 256)
-        self.layer_fcr2 = nn.ReLU()
-        self.layer_fc3 = nn.Linear(256, 2)
+        super(PetNet, self).__init__()
+        self.encoder = smp.Unet(
+            encoder_name="resnet34",
+            encoder_weights="imagenet",
+            classes=2
+        ).encoder
+        self.pool = nn.AdaptiveAvgPool2d(output_size=(1, 1))
+        self.flatten = nn.Flatten()
+        self.fullconnect = nn.Linear(in_features=512, out_features=2)
 
     def forward(self, x):
-        x = self.layer_conv1(x)
-        x = self.layer_actv1(x)
-        x = self.layer_pool1(x)
-        x = self.layer_conv2(x)
-        x = self.layer_actv2(x)
-        x = self.layer_pool2(x)
-        x = x.view(-1,16*22*22)
-        x = self.layer_fc1(x)
-        x = self.layer_fcr1(x)
-        x = self.layer_fc2(x)
-        x = self.layer_fcr2(x)
-        x = self.layer_fc3(x)
+        x = self.encoder(x)[-1]
+        x = self.pool(x)
+        x = self.flatten(x)
+        x = self.fullconnect(x)
         return x
 
 
@@ -116,8 +116,8 @@ def model_train(dataloader: torchdata.DataLoader,
     time_start = time.time()
     for batch, (X, Y) in enumerate(dataloader):
         batches = batches + 1
-        X = X.to("cpu")
-        Y = Y.to("cpu")
+        X = X.to("cuda")
+        Y = Y.to("cuda")
         pY = model(X)
         loss = loss_fn(pY, Y)
         opt_fn.zero_grad()
@@ -134,22 +134,13 @@ def model_train(dataloader: torchdata.DataLoader,
     return tot_loss, num_acct / size
 
 time_st = time.time()
-data_dir = r"C:\Users\Null\Desktop\Internship\Demo\data\PetImages"
+data_dir = r"D:\PetImages"
 train_dir = data_dir
-train_dataset = ArvnDataset_Pet(train_dir, ["Cat", "Dog"], pet_augmentation())
+preproc_fn = smp.encoders.get_preprocessing_fn("resnet34")
+train_dataset = ArvnDataset_Pet(train_dir, ["Cat", "Dog"], pet_augmentation(),get_preprocessing(preproc_fn))
 train_dataloader = torchdata.DataLoader(train_dataset, batch_size=50)
-# model = PetClassifier().to("cpu")
-model = torch.load("./model_pet.pth")
+model = PetNet().to("cuda")
 loss = nn.CrossEntropyLoss()
 optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
 accuvm = 0
-for i in range(10):
-    print(f"Epoch {i} starts")
-    lossv, accuv = model_train(train_dataloader, model, loss, optimizer)
-    print(f"Epoch {i} ends, Loss={lossv}, Acc={accuv}")
-    if accuv > accuvm:
-        accuvm = accuv
-        torch.save(model, "./model_pet.pth")
-        print("Model Saved")
-
-print(f"Time Elapsed:{int(time.time()-time_st)}s")
+model = torch.load("./model_pet.pth")

@@ -1,10 +1,10 @@
-# Graphic Argumentation - Composed Argumentation
+# Graphic augmentation - Composed augmentation
 import albumentations as albu
 import cv2 as cv
 import torch
 import matplotlib.pyplot as plt
 
-arg_img = cv.imread("./images/argumentation_test.jpg", cv.IMREAD_COLOR)
+arg_img = cv.imread("./images/augmentation_test.jpg", cv.IMREAD_COLOR)
 arg_effects = [
     albu.HorizontalFlip(p=1),
     albu.VerticalFlip(p=1),
@@ -17,7 +17,7 @@ arg_effects = [
 arg_composed = albu.Compose(arg_effects)
 arg_img = arg_composed(image=arg_img)['image']
 arg_img = cv.cvtColor(arg_img,cv.COLOR_BGR2RGB)
-# cv.imshow("Argumentation Test", arg_img)
+# cv.imshow("augmentation Test", arg_img)
 # cv.waitKey(delay=0)
 plt.imshow(arg_img)
 
@@ -28,7 +28,7 @@ plt.imshow(arg_img)
 #     return x.transpose(2, 0, 1).astype('float32')
 #
 #
-# arg_img = cv.imread("./images/argumentation_test.jpg", cv.IMREAD_COLOR)
+# arg_img = cv.imread("./images/augmentation_test.jpg", cv.IMREAD_COLOR)
 # arg_effects = [
 #     albu.Lambda(image=to_tensor)
 # ]
@@ -36,7 +36,7 @@ plt.imshow(arg_img)
 # arg_img = arg_composed(image=arg_img)['image']
 #
 
-# # Graphic Argumentation - Different Channel Orders Between OpenCV & PIL
-# arg_img = cv.imread("./images/argumentation_test.jpg",cv.IMREAD_COLOR)
+# # Graphic augmentation - Different Channel Orders Between OpenCV & PIL
+# arg_img = cv.imread("./images/augmentation_test.jpg",cv.IMREAD_COLOR)
 # arg_img = cv.cvtColor(arg_img,cv.COLOR_BGR2RGB)
 # plt.imshow(arg_img)
