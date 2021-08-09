@@ -16,6 +16,11 @@ import shutil
 import segmentation_models_pytorch as smp
 import cv2
 import matplotlib.pyplot as plt
+from util import metrics
+from util import loss
+from util import run
+import pickle
+from util import save
 
 
 def visualize_assist(**kwargs):
@@ -183,7 +188,8 @@ class SegDataset(torch.utils.data.Dataset):
         return fname, image, mask
 
     def __len__(self):
-        return len(self.ids)
+        # return len(self.ids)
+        return min(800,len(self.ids))
 
 
 def visualize_output(dataset, model, modelp, idx):
@@ -206,16 +212,23 @@ def visualize_output(dataset, model, modelp, idx):
                       predict_prob=output_yp, predict_mask=output_ypf)
 
 
+DEVICE = "cuda"
+SAVE_INTERVAL = 1
+root = r'C:\Users\huang\Desktop\wen\MRP\MRP'
+experiment = 'ss-test'
+save_root = os.path.join(root, 'results/' + experiment)
+public_save_root = os.path.join(root, 'results')
 pretrained_model_dict = torch.load(r"moco-pancreas-02.pth.tar")
 model = moco_builder.MoCo(PetNet_V2, K=1024)
 model.load_state_dict(pretrained_model_dict['state_dict'])
 unet = smp.Unet(
     encoder_name="resnet34",
-    encoder_weights="imagenet",
+    encoder_weights=None,
     classes=2,
     activation=None,
 )
 unet.encoder = model.encoder_q.encoder
+unet = unet.to("cuda")
 preproc_fn = smp.encoders.get_preprocessing_fn("resnet34")
 train_dataset = SegDataset(
     r"D:\2\train\imgs",
@@ -224,12 +237,67 @@ train_dataset = SegDataset(
     preprocessing=get_preprocessing(preproc_fn),
     classes=['tissue', 'pancreas']
 )
-test_dataset = SegDataset(
+valid_dataset = SegDataset(
     r"D:\2\test\imgs",
     r"D:\2\test\masks",
     augmentation=pet_augmentation(),
     preprocessing=get_preprocessing(preproc_fn),
     classes=['tissue', 'pancreas']
 )
-train_dataloader = torch.utils.data.DataLoader(train_dataset)
-test_dataloader = torch.utils.data.DataLoader(test_dataset)
+train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=2)
+valid_loader = torch.utils.data.DataLoader(valid_dataset, batch_size=2)
+data_root = r'D:\2'
+x_train_dir = os.path.join(data_root, 'train/imgs')
+y_train_dir = os.path.join(data_root, 'train/masks')
+x_test_dir = os.path.join(data_root, 'test/imgs')
+y_test_dir = os.path.join(data_root, 'test/masks')
+loss_unet = loss.DiceLoss(weight=0.2, activation='softmax2d', ignore_channels=[0]) + loss.FocalLoss()
+optimizer_unet = torch.optim.Adam(unet.parameters(), lr=3e-4)
+metrics = [
+    metrics.SMPIoU(threshold=0.5, ignore_channels=[0], activation='softmax2d'),
+    metrics.Fscore(threshold=0.5, ignore_channels=[0], activation='softmax2d'),
+]
+
+train_epoch = run.TrainEpoch(
+    model=unet,
+    loss=loss_unet,
+    metrics=metrics,
+    optimizer=optimizer_unet,
+    device=DEVICE,
+    verbose=True,
+)
+
+valid_epoch = run.ValidEpoch(
+    model=unet,
+    loss=loss_unet,
+    metrics=metrics,
+    device=DEVICE,
+    verbose=True,
+)
+train_record = []
+valid_record = []
+for epoch in range(80):
+    print(f'current {epoch}')
+    train_logs = train_epoch.run(train_loader)
+    if epoch % 5 == 0:
+        valid_logs = valid_epoch.run(valid_loader)
+
+    train_record.append(train_logs)
+    valid_record.append(valid_logs)
+
+    if epoch in [30]:
+        optimizer_unet.param_groups[0]['lr'] /= 3
+        print('Decrease unet learning rate to' + str(optimizer_unet.param_groups[0]['lr']))
+    elif epoch in [60]:
+        optimizer_unet.param_groups[0]['lr'] /= 3
+        print('Decrease unet learning rate to' + str(optimizer_unet.param_groups[0]['lr']))
+
+    if epoch % SAVE_INTERVAL == SAVE_INTERVAL - 1:
+        # save.save_model(unet, save_root, 'model-1.pth')
+        torch.save(unet, "model-moco-medical.pth")
+        save.save_config(os.path.join(save_root, 'conf.txt'), os.path.join(root, 'config.py'))
+
+    with open(os.path.join(save_root, 'trainlogs.txt'), 'wb') as f:
+        pickle.dump(train_record, f)
+    with open(os.path.join(save_root, 'validlogs.txt'), 'wb') as f:
+        pickle.dump(valid_record, f)
