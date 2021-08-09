@@ -222,10 +222,10 @@ train_dir = data_dir
 preproc_fn = smp.encoders.get_preprocessing_fn("resnet34")
 train_dataset = ArvnDataset_Pet_Constrastive(train_dir, ["Cat", "Dog"], pet_argumentation(),
                                              get_preprocessing(preproc_fn))
-train_dataloader = torch.utils.data.DataLoader(train_dataset, batch_size=32, pin_memory=True, shuffle=False,
+train_dataloader = torch.utils.data.DataLoader(train_dataset, batch_size=64, pin_memory=True, shuffle=False,
                                                drop_last=True)
 model_base_encoder = PetNet_V2()
-model = moco_builder.MoCo(PetNet_V2, K=512).to("cuda")
+model = moco_builder.MoCo(PetNet_V2, K=1024).to("cuda")
 lr = 1e-3
 loss = nn.CrossEntropyLoss().cuda()
 optimizer = torch.optim.SGD(model.parameters(), lr, momentum=0.9, weight_decay=1e-4)
