@@ -13,6 +13,7 @@ import moco.loader
 import moco.builder as moco_builder
 import math
 import shutil
+import segmentation_models_pytorch as smp
 
 
 def pil_visualize(**kwargs):
@@ -47,7 +48,7 @@ def pet_argumentation():
         albu.ToGray(p=0.3),
         albu.RandomRotate90(p=0.5),
         albu.VerticalFlip(p=0.2),
-        albu.GaussianBlur(blur_limit=10, p=0.5, always_apply=False)
+        albu.GaussianBlur(blur_limit=11, p=0.5, always_apply=False)
     ]
     return albu.Compose(transform_list)
 
@@ -132,13 +133,9 @@ class ProgressMeter(object):
         return '[' + fmt + '/' + fmt.format(num_batches) + ']'
 
 
-def adjust_learning_rate(optimizer, epoch, args):
-    lr = args.lr
-    if args.cos:  # cosine lr schedule
-        lr *= 0.5 * (1. + math.cos(math.pi * epoch / args.epochs))
-    else:  # stepwise lr schedule
-        for milestone in args.schedule:
-            lr *= 0.1 if epoch >= milestone else 1.
+def adjust_learning_rate(optimizer, epoch, arglr, totalepochs):
+    lr = arglr
+    lr *= 0.5 * (1. + math.cos(math.pi * epoch / totalepochs))
     for param_group in optimizer.param_groups:
         param_group['lr'] = lr
 
@@ -154,7 +151,7 @@ def accuracy(output, target, topk=(1,)):
 
         res = []
         for k in topk:
-            correct_k = correct[:k].view(-1).float().sum(0, keepdim=True)
+            correct_k = correct[:k].contiguous().view(-1).float().sum(0, keepdim=True)
             res.append(correct_k.mul_(100.0 / batch_size))
         return res
 
@@ -200,9 +197,9 @@ def train(train_loader, model, criterion, optimizer, epoch):
             progress.display(i)
 
 
-class PetNet(nn.Module):
-    def __init__(self):
-        super(PetNet, self).__init__()
+class PetNet_V2(nn.Module):
+    def __init__(self, num_classes=128):
+        super(PetNet_V2, self).__init__()
         self.encoder = smp.Unet(
             encoder_name="resnet34",
             encoder_weights="imagenet",
@@ -210,7 +207,7 @@ class PetNet(nn.Module):
         ).encoder
         self.pool = nn.AdaptiveAvgPool2d(output_size=(1, 1))
         self.flatten = nn.Flatten()
-        self.fullconnect = nn.Linear(in_features=512, out_features=2)
+        self.fullconnect = nn.Linear(in_features=512, out_features=128)
 
     def forward(self, x):
         x = self.encoder(x)[-1]
@@ -222,8 +219,23 @@ class PetNet(nn.Module):
 
 data_dir = r"D:\PetImages"
 train_dir = data_dir
-train_dataset = ArvnDataset_Pet_Constrastive(train_dir, ["Cat", "Dog"], pet_argumentation())
-train_dataloader = torch.utils.data.DataLoader(train_dataset, batch_size=3, pin_memory=True, shuffle=False,
+preproc_fn = smp.encoders.get_preprocessing_fn("resnet34")
+train_dataset = ArvnDataset_Pet_Constrastive(train_dir, ["Cat", "Dog"], pet_argumentation(),
+                                             get_preprocessing(preproc_fn))
+train_dataloader = torch.utils.data.DataLoader(train_dataset, batch_size=32, pin_memory=True, shuffle=False,
                                                drop_last=True)
-model_base_encoder = PetNet()
-model = moco_builder.MoCo(model_base_encoder)
+model_base_encoder = PetNet_V2()
+model = moco_builder.MoCo(PetNet_V2, K=512).to("cuda")
+lr = 1e-3
+loss = nn.CrossEntropyLoss().cuda()
+optimizer = torch.optim.SGD(model.parameters(), lr, momentum=0.9, weight_decay=1e-4)
+epoches = 10
+for epoch in range(epoches):
+    adjust_learning_rate(optimizer, epoch, lr, epoches)
+    train(train_dataloader, model, loss, optimizer, epoch)
+    save_checkpoint({
+        'epoch': epoch + 1,
+        'arch': "resnet34",
+        'state_dict': model.state_dict(),
+        'optimizer': optimizer.state_dict(),
+    }, is_best=False, filename='checkpoint_{:04d}.pth.tar'.format(epoch))
