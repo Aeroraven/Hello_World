@@ -284,7 +284,7 @@ valid_epoch = run.ValidEpoch(
 train_record = []
 valid_record = []
 for epoch in range(80):
-    print(f'current {epoch} lr={lr}')
+    print(f"current {epoch} lr={optimizer_unet.param_groups[0]['lr']}")
     train_logs = train_epoch.run(train_loader)
     if epoch % 5 == 0:
         valid_logs = valid_epoch.run(valid_loader)
@@ -293,7 +293,7 @@ for epoch in range(80):
     valid_record.append(valid_logs)
 
     optimizer_unet.param_groups[0]['lr'] = lr*(math.cos(math.pi*epoch/80)+1)
-        # print('Decrease unet learning rate to' + str(optimizer_unet.param_groups[0]['lr']))
+    # print('Decrease unet learning rate to' + str(optimizer_unet.param_groups[0]['lr']))
 
     if epoch % SAVE_INTERVAL == SAVE_INTERVAL - 1:
         # save.save_model(unet, save_root, 'model-1.pth')
