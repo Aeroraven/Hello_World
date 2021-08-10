@@ -253,12 +253,13 @@ valid_dataset = SegDataset(
 train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=2,shuffle=True)
 valid_loader = torch.utils.data.DataLoader(valid_dataset, batch_size=2,shuffle=True)
 data_root = r'D:\2'
+lr=3e-4
 x_train_dir = os.path.join(data_root, 'train/imgs')
 y_train_dir = os.path.join(data_root, 'train/masks')
 x_test_dir = os.path.join(data_root, 'test/imgs')
 y_test_dir = os.path.join(data_root, 'test/masks')
 loss_unet = loss.DiceLoss(weight=0.2, activation='softmax2d', ignore_channels=[0]) + loss.FocalLoss()
-optimizer_unet = torch.optim.Adam(unet.parameters(), lr=3e-4)
+optimizer_unet = torch.optim.Adam(unet.parameters(), lr=lr)
 metrics = [
     metrics.SMPIoU(threshold=0.5, ignore_channels=[0], activation='softmax2d'),
     metrics.Fscore(threshold=0.5, ignore_channels=[0], activation='softmax2d'),
@@ -283,7 +284,7 @@ valid_epoch = run.ValidEpoch(
 train_record = []
 valid_record = []
 for epoch in range(80):
-    print(f'current {epoch}')
+    print(f'current {epoch} lr={lr}')
     train_logs = train_epoch.run(train_loader)
     if epoch % 5 == 0:
         valid_logs = valid_epoch.run(valid_loader)
@@ -291,12 +292,8 @@ for epoch in range(80):
     train_record.append(train_logs)
     valid_record.append(valid_logs)
 
-    if epoch in [30]:
-        optimizer_unet.param_groups[0]['lr'] /= 3
-        print('Decrease unet learning rate to' + str(optimizer_unet.param_groups[0]['lr']))
-    elif epoch in [60]:
-        optimizer_unet.param_groups[0]['lr'] /= 3
-        print('Decrease unet learning rate to' + str(optimizer_unet.param_groups[0]['lr']))
+    optimizer_unet.param_groups[0]['lr'] = lr*(math.cos(math.pi*epoch/80)+1)
+        # print('Decrease unet learning rate to' + str(optimizer_unet.param_groups[0]['lr']))
 
     if epoch % SAVE_INTERVAL == SAVE_INTERVAL - 1:
         # save.save_model(unet, save_root, 'model-1.pth')

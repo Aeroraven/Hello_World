@@ -76,7 +76,8 @@ class ArvnDataset_Pet_Constrastive(torchdata.Dataset):
     def __len__(self):
         return len(self.data_name)
 
-    def __getitem__(self, item):
+    def __getitem__(self, i):
+        item = np.random.randint(len(self.data_name))
         image = pimg.open(self.data_name[item][2] + "/" + self.data_name[item][0]).convert("RGB")
         image = np.array(image)
         image2 = image.copy()
@@ -222,7 +223,7 @@ train_dir = data_dir
 preproc_fn = smp.encoders.get_preprocessing_fn("resnet34")
 train_dataset = ArvnDataset_Pet_Constrastive(train_dir, ["imgs"], pet_augmentation(),
                                              get_preprocessing(preproc_fn))
-train_dataloader = torch.utils.data.DataLoader(train_dataset, batch_size=8, pin_memory=True, shuffle=False,
+train_dataloader = torch.utils.data.DataLoader(train_dataset, batch_size=8, pin_memory=True, shuffle=True,
                                                drop_last=True)
 model_base_encoder = PetNet_V2()
 model = moco_builder.MoCo(PetNet_V2, K=1024).to("cuda")
