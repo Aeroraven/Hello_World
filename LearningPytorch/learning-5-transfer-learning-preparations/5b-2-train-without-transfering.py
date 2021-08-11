@@ -161,7 +161,7 @@ class SegDataset(torch.utils.data.Dataset):
 
         self.augmentation = augmentation
         self.preprocessing = preprocessing
-        self.maxsize=maxsize
+        self.maxsize = maxsize
 
     def get_original_image(self, i):
         fname = self.images_fps[i]
@@ -193,7 +193,7 @@ class SegDataset(torch.utils.data.Dataset):
 
     def __len__(self):
         # return len(self.ids)
-        return min(self.maxsize,len(self.ids))
+        return min(self.maxsize, len(self.ids))
 
 
 def visualize_output(dataset, model, modelp, idx):
@@ -222,19 +222,13 @@ root = r'C:\Users\huang\Desktop\wen\MRP\MRP'
 experiment = 'ss-test'
 save_root = os.path.join(root, 'results/' + experiment)
 public_save_root = os.path.join(root, 'results')
-pretrained_model_dict = torch.load(r"moco-pancreas-02.pth.tar")
-model = moco_builder.MoCo(PetNet_V2, K=1024)
-model.load_state_dict(pretrained_model_dict['state_dict'])
+
 unet = smp.Unet(
     encoder_name="resnet34",
-    encoder_weights=None,
+    encoder_weights="imagenet",
     classes=2,
     activation=None,
 )
-unet.encoder = model.encoder_q.encoder
-unet = unet.to("cuda")
-
-unet = torch.load("model-moco-medical.pth")
 preproc_fn = smp.encoders.get_preprocessing_fn("resnet34")
 train_dataset = SegDataset(
     r"D:\2\train\imgs",
@@ -242,7 +236,7 @@ train_dataset = SegDataset(
     augmentation=pet_augmentation(),
     preprocessing=get_preprocessing(preproc_fn),
     classes=['tissue', 'pancreas'],
-    maxsize=800
+    maxsize=150
 )
 valid_dataset = SegDataset(
     r"D:\2\test\imgs",
@@ -250,12 +244,12 @@ valid_dataset = SegDataset(
     augmentation=pet_augmentation(),
     preprocessing=get_preprocessing(preproc_fn),
     classes=['tissue', 'pancreas'],
-    maxsize=800
+    maxsize=150
 )
-train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=2,shuffle=True)
-valid_loader = torch.utils.data.DataLoader(valid_dataset, batch_size=2,shuffle=True)
+train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=2, shuffle=True)
+valid_loader = torch.utils.data.DataLoader(valid_dataset, batch_size=2, shuffle=True)
 data_root = r'D:\2'
-lr=3e-4
+lr = 3e-4
 x_train_dir = os.path.join(data_root, 'train/imgs')
 y_train_dir = os.path.join(data_root, 'train/masks')
 x_test_dir = os.path.join(data_root, 'test/imgs')
@@ -285,7 +279,8 @@ valid_epoch = run.ValidEpoch(
 )
 train_record = []
 valid_record = []
-for epoch in range(80):
+epochs = 80
+for epoch in range(epochs):
     print(f"current {epoch} lr={optimizer_unet.param_groups[0]['lr']}")
     train_logs = train_epoch.run(train_loader)
     if epoch % 5 == 0:
@@ -294,15 +289,15 @@ for epoch in range(80):
     train_record.append(train_logs)
     valid_record.append(valid_logs)
 
-    optimizer_unet.param_groups[0]['lr'] = lr*(math.cos(math.pi*epoch/80)+1)*0.5
+    optimizer_unet.param_groups[0]['lr'] = lr * (math.cos(math.pi * epoch / epochs) + 1) * 0.5
     # print('Decrease unet learning rate to' + str(optimizer_unet.param_groups[0]['lr']))
 
     if epoch % SAVE_INTERVAL == SAVE_INTERVAL - 1:
         # save.save_model(unet, save_root, 'model-1.pth')
-        torch.save(unet, "model-moco-medical-2.pth")
+        torch.save(unet, "model-moco-medical-without-transfer.pth")
         save.save_config(os.path.join(save_root, 'conf.txt'), os.path.join(root, 'config.py'))
 
-    with open(os.path.join(save_root, 'trainlogs-2.txt'), 'wb') as f:
+    with open(os.path.join(save_root, 'trainlogs-without-transfer-2.txt'), 'wb') as f:
         pickle.dump(train_record, f)
-    with open(os.path.join(save_root, 'validlogs-2.txt'), 'wb') as f:
+    with open(os.path.join(save_root, 'validlogs-without-transfer-2.txt'), 'wb') as f:
         pickle.dump(valid_record, f)
