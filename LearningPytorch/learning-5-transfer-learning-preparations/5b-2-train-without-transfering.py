@@ -73,8 +73,8 @@ def pet_augmentation():
         albu.ToSepia(p=0.2),
         albu.ToGray(p=0.3),
         albu.RandomRotate90(p=0.5),
-        albu.VerticalFlip(p=0.2),
-        albu.GaussianBlur(blur_limit=11, p=0.5, always_apply=False)
+        albu.VerticalFlip(p=0.5),
+        albu.GaussianBlur(blur_limit=5, p=0.3, always_apply=False)
     ]
     return albu.Compose(transform_list)
 

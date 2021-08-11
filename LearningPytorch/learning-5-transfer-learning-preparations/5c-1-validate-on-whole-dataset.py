@@ -79,6 +79,12 @@ def pet_augmentation():
     return albu.Compose(transform_list)
 
 
+def pet_augmentation_valid():
+    transform_list = [
+        albu.Resize(320, 320),
+    ]
+    return albu.Compose(transform_list)
+
 class ArvnDataset_Pet_Constrastive(torchdata.Dataset):
     def __init__(self,
                  image_src: str,
@@ -216,7 +222,7 @@ def visualize_output(dataset, model, modelp, idx):
                       predict_prob=output_yp, predict_mask=output_ypf)
 
 
-DEVICE = "cuda"
+DEVICE = "cpu"
 SAVE_INTERVAL = 1
 root = r'C:\Users\huang\Desktop\wen\MRP\MRP'
 experiment = 'ss-test'
@@ -232,9 +238,9 @@ unet = smp.Unet(
     activation=None,
 )
 unet.encoder = model.encoder_q.encoder
-unet = unet.to("cuda")
+unet = unet.to("cpu")
 
-# unet = torch.load("model-moco-medical.pth")
+unet = torch.load("model-moco-medical-3.pth").to("cpu")
 preproc_fn = smp.encoders.get_preprocessing_fn("resnet34")
 train_dataset = SegDataset(
     r"D:\2\train\imgs",
@@ -247,10 +253,10 @@ train_dataset = SegDataset(
 valid_dataset = SegDataset(
     r"D:\2\test\imgs",
     r"D:\2\test\masks",
-    augmentation=pet_augmentation(),
+    augmentation=pet_augmentation_valid(),
     preprocessing=get_preprocessing(preproc_fn),
     classes=['tissue', 'pancreas'],
-    maxsize=150
+    maxsize=99999
 )
 train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=2,shuffle=True)
 valid_loader = torch.utils.data.DataLoader(valid_dataset, batch_size=2,shuffle=True)
@@ -285,24 +291,6 @@ valid_epoch = run.ValidEpoch(
 )
 train_record = []
 valid_record = []
-for epoch in range(80):
-    print(f"current {epoch} lr={optimizer_unet.param_groups[0]['lr']}")
-    train_logs = train_epoch.run(train_loader)
-    if epoch % 5 == 0:
-        valid_logs = valid_epoch.run(valid_loader)
+for epoch in range(1):
+    valid_logs = valid_epoch.run(valid_loader)
 
-    train_record.append(train_logs)
-    valid_record.append(valid_logs)
-
-    optimizer_unet.param_groups[0]['lr'] = lr*(math.cos(math.pi*epoch/80)+1)*0.5
-    # print('Decrease unet learning rate to' + str(optimizer_unet.param_groups[0]['lr']))
-
-    if epoch % SAVE_INTERVAL == SAVE_INTERVAL - 1:
-        # save.save_model(unet, save_root, 'model-1.pth')
-        torch.save(unet, "model-moco-medical-3.pth")
-        save.save_config(os.path.join(save_root, 'conf.txt'), os.path.join(root, 'config.py'))
-
-    with open(os.path.join(save_root, 'trainlogs-3.txt'), 'wb') as f:
-        pickle.dump(train_record, f)
-    with open(os.path.join(save_root, 'validlogs-3.txt'), 'wb') as f:
-        pickle.dump(valid_record, f)
