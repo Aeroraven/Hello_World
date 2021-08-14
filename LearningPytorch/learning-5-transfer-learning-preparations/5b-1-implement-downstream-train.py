@@ -237,12 +237,12 @@ unet = unet.to("cuda")
 # unet = torch.load("model-moco-medical.pth")
 preproc_fn = smp.encoders.get_preprocessing_fn("resnet34")
 train_dataset = SegDataset(
-    r"D:\2\train-150",
+    r"D:\2\train\imgs",
     r"D:\2\train\masks",
     augmentation=pet_augmentation(),
     preprocessing=get_preprocessing(preproc_fn),
     classes=['tissue', 'pancreas'],
-    maxsize=9999
+    maxsize=150
 )
 valid_dataset = SegDataset(
     r"D:\2\test\imgs",
@@ -256,7 +256,7 @@ train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=2,shuffle=T
 valid_loader = torch.utils.data.DataLoader(valid_dataset, batch_size=2,shuffle=True)
 data_root = r'D:\2'
 lr=3e-4
-x_train_dir = os.path.join(data_root, 'train-150')
+x_train_dir = os.path.join(data_root, 'train/imgs')
 y_train_dir = os.path.join(data_root, 'train/masks')
 x_test_dir = os.path.join(data_root, 'test/imgs')
 y_test_dir = os.path.join(data_root, 'test/masks')
@@ -288,7 +288,7 @@ valid_record = []
 for epoch in range(80):
     print(f"current {epoch} lr={optimizer_unet.param_groups[0]['lr']}")
     train_logs = train_epoch.run(train_loader)
-    if epoch % 100 == 0:
+    if epoch % 5 == 0:
         valid_logs = valid_epoch.run(valid_loader)
 
     train_record.append(train_logs)
@@ -299,10 +299,10 @@ for epoch in range(80):
 
     if epoch % SAVE_INTERVAL == SAVE_INTERVAL - 1:
         # save.save_model(unet, save_root, 'model-1.pth')
-        torch.save(unet, "model-moco-medical-6-sz150.pth")
+        torch.save(unet, "model-moco-medical-3.pth")
         save.save_config(os.path.join(save_root, 'conf.txt'), os.path.join(root, 'config.py'))
 
-    with open(os.path.join(save_root, 'trainlogs-5.txt'), 'wb') as f:
+    with open(os.path.join(save_root, 'trainlogs-3.txt'), 'wb') as f:
         pickle.dump(train_record, f)
-    with open(os.path.join(save_root, 'validlogs-5.txt'), 'wb') as f:
+    with open(os.path.join(save_root, 'validlogs-3.txt'), 'wb') as f:
         pickle.dump(valid_record, f)

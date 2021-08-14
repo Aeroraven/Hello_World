@@ -1,25 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="459ebf53-3682-4428-93a8-a1d2a3c0a6ba" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/learning-5-transfer-learning-preparations/5b-1-train-logs-sz50.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/learning-5-transfer-learning-preparations/5b-2-train-logs-sz50.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/learning-5-transfer-learning-preparations/5b-2-train-logs.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/learning-5-transfer-learning-preparations/5d-1-pickle-read.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/learning-5-transfer-learning-preparations/5d-2-visualize-2.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/learning-6-augmentation/6a-1-exp1.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/learning-6-augmentation/6a-2-exp2.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/learning-6-augmentation/6a-3-exp3.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/learning-6-augmentation/6a-4-exp4.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/learning-3-reviewing-image-classifiers/3a-simplest-pet-classifier-predict.py" beforeDir="false" afterPath="$PROJECT_DIR$/learning-3-classification/3a-simplest-pet-classifier-predict.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/learning-3-reviewing-image-classifiers/3a-simplest-pet-classifier.py" beforeDir="false" afterPath="$PROJECT_DIR$/learning-3-classification/3a-simplest-pet-classifier.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/learning-3-reviewing-image-classifiers/3b-mnist-rot-classifier-predict.py" beforeDir="false" afterPath="$PROJECT_DIR$/learning-3-classification/3b-mnist-rot-classifier-predict.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/learning-3-reviewing-image-classifiers/3b-mnist-rot-classifier.py" beforeDir="false" afterPath="$PROJECT_DIR$/learning-3-classification/3b-mnist-rot-classifier.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/learning-5-transfer-learning-preparations/5b-1-implement-downstream-train.py" beforeDir="false" afterPath="$PROJECT_DIR$/learning-5-transfer-learning-preparations/5b-1-implement-downstream-train.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/learning-5-transfer-learning-preparations/5b-2-train-without-transfering.py" beforeDir="false" afterPath="$PROJECT_DIR$/learning-5-transfer-learning-preparations/5b-2-train-without-transfering.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/learning-5-transfer-learning-preparations/5c-1-validate-on-whole-dataset.py" beforeDir="false" afterPath="$PROJECT_DIR$/learning-5-transfer-learning-preparations/5c-1-validate-on-whole-dataset.py" afterDir="false" />
-    </list>
+    <list default="true" id="459ebf53-3682-4428-93a8-a1d2a3c0a6ba" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -36,9 +18,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="ProjectId" id="1wQYgaIrqExpScTYkmi5vQ8uMKZ" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
-    <ConfirmationsSetting value="2" id="Add" />
-  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -47,7 +27,91 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
   </component>
-  <component name="RunManager" selected="Python.6a-4-exp4">
+  <component name="RunManager" selected="Python.5c-1-validate-on-whole-dataset">
+    <configuration name="4d-2-using-medical-dataset" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="LearningPytorch" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/learning-4-contrastive-learning-preparations" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/learning-4-contrastive-learning-preparations/4d-2-using-medical-dataset.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="5a-4-visualize" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="LearningPytorch" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/learning-5-transfer-learning-preparations" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/learning-5-transfer-learning-preparations/5a-4-visualize.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="5b-1-implement-downstream-train" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="LearningPytorch" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/learning-5-transfer-learning-preparations" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/learning-5-transfer-learning-preparations/5b-1-implement-downstream-train.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="5b-2-train-without-transfering" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="LearningPytorch" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/learning-5-transfer-learning-preparations" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/learning-5-transfer-learning-preparations/5b-2-train-without-transfering.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="5c-1-validate-on-whole-dataset" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="LearningPytorch" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -69,97 +133,13 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="6a-1-exp1" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="LearningPytorch" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/learning-6-augmentation" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/learning-6-augmentation/6a-1-exp1.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="6a-2-exp2" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="LearningPytorch" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/learning-6-augmentation" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/learning-6-augmentation/6a-2-exp2.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="6a-3-exp3" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="LearningPytorch" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/learning-6-augmentation" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/learning-6-augmentation/6a-3-exp3.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="6a-4-exp4" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="LearningPytorch" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/learning-6-augmentation" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/learning-6-augmentation/6a-4-exp4.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.6a-4-exp4" />
-        <item itemvalue="Python.6a-3-exp3" />
-        <item itemvalue="Python.6a-2-exp2" />
-        <item itemvalue="Python.6a-1-exp1" />
         <item itemvalue="Python.5c-1-validate-on-whole-dataset" />
+        <item itemvalue="Python.5b-2-train-without-transfering" />
+        <item itemvalue="Python.5b-1-implement-downstream-train" />
+        <item itemvalue="Python.4d-2-using-medical-dataset" />
+        <item itemvalue="Python.5a-4-visualize" />
       </list>
     </recent_temporary>
   </component>
@@ -173,17 +153,5 @@
       <updated>1628392393671</updated>
     </task>
     <servers />
-  </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State />
-          </value>
-        </entry>
-      </map>
-    </option>
-    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>

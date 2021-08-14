@@ -222,7 +222,7 @@ def visualize_output(dataset, model, modelp, idx):
                       predict_prob=output_yp, predict_mask=output_ypf)
 
 
-DEVICE = "cuda"
+DEVICE = "cpu"
 SAVE_INTERVAL = 1
 root = r'C:\Users\huang\Desktop\wen\MRP\MRP'
 experiment = 'ss-test'
@@ -238,9 +238,9 @@ unet = smp.Unet(
     activation=None,
 )
 unet.encoder = model.encoder_q.encoder
-unet = unet.to("cuda")
+unet = unet.to("cpu")
 
-unet = torch.load("model-moco-medical-without-transfer-sz50-2.pth").to("cuda")
+unet = torch.load("model-moco-medical-3.pth").to("cpu")
 preproc_fn = smp.encoders.get_preprocessing_fn("resnet34")
 train_dataset = SegDataset(
     r"D:\2\train\imgs",

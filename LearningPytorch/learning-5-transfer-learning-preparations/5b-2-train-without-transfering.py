@@ -231,12 +231,12 @@ unet = smp.Unet(
 )
 preproc_fn = smp.encoders.get_preprocessing_fn("resnet34")
 train_dataset = SegDataset(
-    r"D:\2\train-150",
+    r"D:\2\train\imgs",
     r"D:\2\train\masks",
     augmentation=pet_augmentation(),
     preprocessing=get_preprocessing(preproc_fn),
     classes=['tissue', 'pancreas'],
-    maxsize=99999
+    maxsize=150
 )
 valid_dataset = SegDataset(
     r"D:\2\test\imgs",
@@ -250,7 +250,7 @@ train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=2, shuffle=
 valid_loader = torch.utils.data.DataLoader(valid_dataset, batch_size=2, shuffle=True)
 data_root = r'D:\2'
 lr = 3e-4
-x_train_dir = os.path.join(data_root, 'train-150')
+x_train_dir = os.path.join(data_root, 'train/imgs')
 y_train_dir = os.path.join(data_root, 'train/masks')
 x_test_dir = os.path.join(data_root, 'test/imgs')
 y_test_dir = os.path.join(data_root, 'test/masks')
@@ -283,7 +283,7 @@ epochs = 80
 for epoch in range(epochs):
     print(f"current {epoch} lr={optimizer_unet.param_groups[0]['lr']}")
     train_logs = train_epoch.run(train_loader)
-    if epoch % 100 == 0:
+    if epoch % 5 == 0:
         valid_logs = valid_epoch.run(valid_loader)
 
     train_record.append(train_logs)
@@ -294,10 +294,10 @@ for epoch in range(epochs):
 
     if epoch % SAVE_INTERVAL == SAVE_INTERVAL - 1:
         # save.save_model(unet, save_root, 'model-1.pth')
-        torch.save(unet, "model-moco-medical-without-transfer-sz50-2.pth")
+        torch.save(unet, "model-moco-medical-without-transfer.pth")
         save.save_config(os.path.join(save_root, 'conf.txt'), os.path.join(root, 'config.py'))
 
-    with open(os.path.join(save_root, 'trainlogs-without-transfer-2-sz50.txt'), 'wb') as f:
+    with open(os.path.join(save_root, 'trainlogs-without-transfer-2.txt'), 'wb') as f:
         pickle.dump(train_record, f)
-    with open(os.path.join(save_root, 'validlogs-without-transfer-2-sz50.txt'), 'wb') as f:
+    with open(os.path.join(save_root, 'validlogs-without-transfer-2.txt'), 'wb') as f:
         pickle.dump(valid_record, f)
