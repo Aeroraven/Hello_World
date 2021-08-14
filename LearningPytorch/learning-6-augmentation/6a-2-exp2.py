@@ -69,15 +69,18 @@ def get_preprocessing(preprocessing_fn):
 def pet_augmentation():
     transform_list = [
         albu.Resize(320, 320),
-        albu.HorizontalFlip(p=0.5),
-        albu.ToSepia(p=0.2),
-        albu.ToGray(p=0.3),
         albu.RandomRotate90(p=0.5),
         albu.VerticalFlip(p=0.5),
-        albu.GaussianBlur(blur_limit=5, p=0.3, always_apply=False)
+        albu.HorizontalFlip(p=0.5),
     ]
     return albu.Compose(transform_list)
 
+
+def pet_augmentation_valid():
+    transform_list = [
+        albu.Resize(320, 320),
+    ]
+    return albu.Compose(transform_list)
 
 class ArvnDataset_Pet_Constrastive(torchdata.Dataset):
     def __init__(self,
@@ -231,25 +234,25 @@ unet = smp.Unet(
 )
 preproc_fn = smp.encoders.get_preprocessing_fn("resnet34")
 train_dataset = SegDataset(
-    r"D:\2\train-150",
-    r"D:\2\train\masks",
-    augmentation=pet_augmentation(),
+    r"D:\liver2\liver2\train-150",
+    r"D:\liver2\liver2\train\masks",
+    augmentation=pet_augmentation_valid(),
     preprocessing=get_preprocessing(preproc_fn),
     classes=['tissue', 'pancreas'],
     maxsize=99999
 )
 valid_dataset = SegDataset(
-    r"D:\2\test\imgs",
-    r"D:\2\test\masks",
-    augmentation=pet_augmentation(),
+    r"D:\liver2\liver2\test\imgs",
+    r"D:\liver2\liver2\test\masks",
+    augmentation=pet_augmentation_valid(),
     preprocessing=get_preprocessing(preproc_fn),
     classes=['tissue', 'pancreas'],
-    maxsize=150
+    maxsize=99999
 )
 train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=2, shuffle=True)
 valid_loader = torch.utils.data.DataLoader(valid_dataset, batch_size=2, shuffle=True)
-data_root = r'D:\2'
-lr = 3e-4
+data_root = r'D:\liver2\liver2'
+lr = 3e-5
 x_train_dir = os.path.join(data_root, 'train-150')
 y_train_dir = os.path.join(data_root, 'train/masks')
 x_test_dir = os.path.join(data_root, 'test/imgs')
@@ -279,25 +282,19 @@ valid_epoch = run.ValidEpoch(
 )
 train_record = []
 valid_record = []
-epochs = 80
+epochs = 100
 for epoch in range(epochs):
+    optimizer_unet.param_groups[0]['lr'] = lr * (math.pow(0.96, epoch))
     print(f"current {epoch} lr={optimizer_unet.param_groups[0]['lr']}")
     train_logs = train_epoch.run(train_loader)
-    if epoch % 100 == 0:
-        valid_logs = valid_epoch.run(valid_loader)
-
     train_record.append(train_logs)
-    valid_record.append(valid_logs)
+    torch.save(unet, "model-exp2.pth")
 
-    optimizer_unet.param_groups[0]['lr'] = lr * (math.cos(math.pi * epoch / epochs) + 1) * 0.5
-    # print('Decrease unet learning rate to' + str(optimizer_unet.param_groups[0]['lr']))
-
-    if epoch % SAVE_INTERVAL == SAVE_INTERVAL - 1:
-        # save.save_model(unet, save_root, 'model-1.pth')
-        torch.save(unet, "model-moco-medical-without-transfer-sz50-2.pth")
-        save.save_config(os.path.join(save_root, 'conf.txt'), os.path.join(root, 'config.py'))
-
-    with open(os.path.join(save_root, 'trainlogs-without-transfer-2-sz50.txt'), 'wb') as f:
+    with open('exp-2-train.txt', 'wb') as f:
         pickle.dump(train_record, f)
-    with open(os.path.join(save_root, 'validlogs-without-transfer-2-sz50.txt'), 'wb') as f:
-        pickle.dump(valid_record, f)
+
+print("VALIDATING...")
+valid_logs = valid_epoch.run(valid_loader)
+valid_record.append(valid_logs)
+with open('exp-2-valid.txt', 'wb') as f:
+    pickle.dump(valid_record, f)

@@ -79,6 +79,12 @@ def pet_augmentation():
     return albu.Compose(transform_list)
 
 
+def pet_augmentation_valid():
+    transform_list = [
+        albu.Resize(320, 320),
+    ]
+    return albu.Compose(transform_list)
+
 class ArvnDataset_Pet_Constrastive(torchdata.Dataset):
     def __init__(self,
                  image_src: str,
@@ -152,7 +158,6 @@ class SegDataset(torch.utils.data.Dataset):
             maxsize=65536
     ):
         self.ids = os.listdir(dir_img)
-        random.shuffle(self.ids)
         self.images_fps = [os.path.join(dir_img, image_id) for image_id in self.ids]
         self.masks_fps = [os.path.join(dir_mask, image_id) for image_id in self.ids]
 
@@ -161,7 +166,7 @@ class SegDataset(torch.utils.data.Dataset):
 
         self.augmentation = augmentation
         self.preprocessing = preprocessing
-        self.maxsize = maxsize
+        self.maxsize=maxsize
 
     def get_original_image(self, i):
         fname = self.images_fps[i]
@@ -193,7 +198,7 @@ class SegDataset(torch.utils.data.Dataset):
 
     def __len__(self):
         # return len(self.ids)
-        return min(self.maxsize, len(self.ids))
+        return min(self.maxsize,len(self.ids))
 
 
 def visualize_output(dataset, model, modelp, idx):
@@ -216,88 +221,21 @@ def visualize_output(dataset, model, modelp, idx):
                       predict_prob=output_yp, predict_mask=output_ypf)
 
 
-DEVICE = "cuda"
+DEVICE = "cpu"
 SAVE_INTERVAL = 1
 root = r'C:\Users\huang\Desktop\wen\MRP\MRP'
 experiment = 'ss-test'
 save_root = os.path.join(root, 'results/' + experiment)
 public_save_root = os.path.join(root, 'results')
-
-unet = smp.Unet(
-    encoder_name="resnet34",
-    encoder_weights="imagenet",
-    classes=2,
-    activation=None,
-)
+unet = torch.load("model-moco-medical-6-sz150.pth").to("cpu")
 preproc_fn = smp.encoders.get_preprocessing_fn("resnet34")
-train_dataset = SegDataset(
-    r"D:\2\train-150",
-    r"D:\2\train\masks",
-    augmentation=pet_augmentation(),
+
+valid_dataset = SegDataset(
+    r"D:\2\test\imgs",
+    r"D:\2\test\masks",
+    augmentation=pet_augmentation_valid(),
     preprocessing=get_preprocessing(preproc_fn),
     classes=['tissue', 'pancreas'],
     maxsize=99999
 )
-valid_dataset = SegDataset(
-    r"D:\2\test\imgs",
-    r"D:\2\test\masks",
-    augmentation=pet_augmentation(),
-    preprocessing=get_preprocessing(preproc_fn),
-    classes=['tissue', 'pancreas'],
-    maxsize=150
-)
-train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=2, shuffle=True)
-valid_loader = torch.utils.data.DataLoader(valid_dataset, batch_size=2, shuffle=True)
-data_root = r'D:\2'
-lr = 3e-4
-x_train_dir = os.path.join(data_root, 'train-150')
-y_train_dir = os.path.join(data_root, 'train/masks')
-x_test_dir = os.path.join(data_root, 'test/imgs')
-y_test_dir = os.path.join(data_root, 'test/masks')
-loss_unet = loss.DiceLoss(weight=0.2, activation='softmax2d', ignore_channels=[0]) + loss.FocalLoss()
-optimizer_unet = torch.optim.Adam(unet.parameters(), lr=lr)
-metrics = [
-    metrics.SMPIoU(threshold=0.5, ignore_channels=[0], activation='softmax2d'),
-    metrics.Fscore(threshold=0.5, ignore_channels=[0], activation='softmax2d'),
-]
-
-train_epoch = run.TrainEpoch(
-    model=unet,
-    loss=loss_unet,
-    metrics=metrics,
-    optimizer=optimizer_unet,
-    device=DEVICE,
-    verbose=True,
-)
-
-valid_epoch = run.ValidEpoch(
-    model=unet,
-    loss=loss_unet,
-    metrics=metrics,
-    device=DEVICE,
-    verbose=True,
-)
-train_record = []
-valid_record = []
-epochs = 80
-for epoch in range(epochs):
-    print(f"current {epoch} lr={optimizer_unet.param_groups[0]['lr']}")
-    train_logs = train_epoch.run(train_loader)
-    if epoch % 100 == 0:
-        valid_logs = valid_epoch.run(valid_loader)
-
-    train_record.append(train_logs)
-    valid_record.append(valid_logs)
-
-    optimizer_unet.param_groups[0]['lr'] = lr * (math.cos(math.pi * epoch / epochs) + 1) * 0.5
-    # print('Decrease unet learning rate to' + str(optimizer_unet.param_groups[0]['lr']))
-
-    if epoch % SAVE_INTERVAL == SAVE_INTERVAL - 1:
-        # save.save_model(unet, save_root, 'model-1.pth')
-        torch.save(unet, "model-moco-medical-without-transfer-sz50-2.pth")
-        save.save_config(os.path.join(save_root, 'conf.txt'), os.path.join(root, 'config.py'))
-
-    with open(os.path.join(save_root, 'trainlogs-without-transfer-2-sz50.txt'), 'wb') as f:
-        pickle.dump(train_record, f)
-    with open(os.path.join(save_root, 'validlogs-without-transfer-2-sz50.txt'), 'wb') as f:
-        pickle.dump(valid_record, f)
+visualize_output(valid_dataset,unet,None,1025)
