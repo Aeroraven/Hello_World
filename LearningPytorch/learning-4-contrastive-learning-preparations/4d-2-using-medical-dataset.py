@@ -44,11 +44,8 @@ def pet_augmentation():
     transform_list = [
         albu.Resize(320, 320),
         albu.HorizontalFlip(p=0.5),
-        albu.ToSepia(p=0.2),
-        albu.ToGray(p=0.3),
-        albu.RandomRotate90(p=0.5),
-        albu.VerticalFlip(p=0.2),
-        albu.GaussianBlur(blur_limit=11, p=0.5, always_apply=False)
+        albu.MultiplicativeNoise(p=0.7, multiplier=(0.8, 1.2), elementwise=True),
+        albu.GaussianBlur(blur_limit=3, p=0.5, always_apply=False)
     ]
     return albu.Compose(transform_list)
 
@@ -218,16 +215,16 @@ class PetNet_V2(nn.Module):
         return x
 
 
-data_dir = r"D:\2\train"
+data_dir = r"D:\liver2\liver2\train"
 train_dir = data_dir
 preproc_fn = smp.encoders.get_preprocessing_fn("resnet34")
 train_dataset = ArvnDataset_Pet_Constrastive(train_dir, ["imgs"], pet_augmentation(),
                                              get_preprocessing(preproc_fn))
-train_dataloader = torch.utils.data.DataLoader(train_dataset, batch_size=8, pin_memory=True, shuffle=True,
+train_dataloader = torch.utils.data.DataLoader(train_dataset, batch_size=4, pin_memory=True, shuffle=True,
                                                drop_last=True)
 model_base_encoder = PetNet_V2()
 model = moco_builder.MoCo(PetNet_V2, K=1024).to("cuda")
-lr = 1e-3
+lr = 3e-5
 loss = nn.CrossEntropyLoss().cuda()
 optimizer = torch.optim.SGD(model.parameters(), lr, momentum=0.9, weight_decay=1e-4)
 epoches = 10
@@ -239,4 +236,4 @@ for epoch in range(epoches):
         'arch': "resnet34",
         'state_dict': model.state_dict(),
         'optimizer': optimizer.state_dict(),
-    }, is_best=False, filename='checkpoint_{:04d}.pth.tar'.format(epoch))
+    }, is_best=False, filename='checkpoint_exp16_{:04d}.pth.tar'.format(epoch))

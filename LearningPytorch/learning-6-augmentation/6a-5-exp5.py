@@ -71,8 +71,10 @@ def get_preprocessing(preprocessing_fn):
 def pet_augmentation():
     transform_list = [
         albu.Resize(320, 320),
+        albu.RandomRotate90(p=0.5),
+        albu.VerticalFlip(p=0.5),
         albu.HorizontalFlip(p=0.5),
-        albu.MultiplicativeNoise(p=0.7,multiplier=(0.8, 1.2),elementwise=True),
+        albu.MultiplicativeNoise(p=0.7,multiplier=(0.5, 1.5),elementwise=True),
         albu.GaussianBlur(p=0.5,blur_limit=3)
     ]
     return albu.Compose(transform_list)
@@ -253,38 +255,28 @@ unet = smp.Unet(
     classes=2,
     activation=None,
 )
-unet = load_unet_weights(unet,"model-exp4-ss.pth")
-unet = torch.load("model-exp17-73.pth")
+# unet = load_unet_weights(unet,"model-exp4-ss.pth")
 preproc_fn = smp.encoders.get_preprocessing_fn("resnet34")
 train_dataset = SegDataset(
-    r"D:\liver1\liver1\train\imgs",
-    r"D:\liver1\liver1\train\masks",
-    augmentation=pet_augmentation(),
-    preprocessing=get_preprocessing(preproc_fn),
-    classes=['tissue', 'pancreas'],
-    maxsize=150
-)
-valid_dataset = SegDataset(
-    r"D:\liver1\liver1\test\imgs",
-    r"D:\liver1\liver1\test\masks",
+    r"D:\liver2\liver2\train-150",
+    r"D:\liver2\liver2\train\masks",
     augmentation=pet_augmentation_valid(),
     preprocessing=get_preprocessing(preproc_fn),
     classes=['tissue', 'pancreas'],
     maxsize=99999
 )
-valid_dataset2 = SegDataset(
-    r"D:\liver1\liver1\test\imgs",
-    r"D:\liver1\liver1\test\masks",
+valid_dataset = SegDataset(
+    r"D:\liver2\liver2\test\imgs",
+    r"D:\liver2\liver2\test\masks",
     augmentation=pet_augmentation_valid(),
     preprocessing=get_preprocessing(preproc_fn),
     classes=['tissue', 'pancreas'],
-    maxsize=100
+    maxsize=99999
 )
 train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=2, shuffle=True)
 valid_loader = torch.utils.data.DataLoader(valid_dataset, batch_size=2, shuffle=True)
-valid_loader2 = torch.utils.data.DataLoader(valid_dataset2, batch_size=2, shuffle=True)
-data_root = r'D:\liver1\liver1'
-lr = 3e-4
+data_root = r'D:\liver2\liver2'
+lr = 3e-5
 x_train_dir = os.path.join(data_root, 'train-150')
 y_train_dir = os.path.join(data_root, 'train/masks')
 x_test_dir = os.path.join(data_root, 'test/imgs')
@@ -314,23 +306,19 @@ valid_epoch = run.ValidEpoch(
 )
 train_record = []
 valid_record = []
-epochs = 100
-'''
-for epoch in range(57,epochs):
+epochs = 0
+for epoch in range(epochs):
     optimizer_unet.param_groups[0]['lr'] = lr * (math.pow(0.96, epoch))
     print(f"current {epoch} lr={optimizer_unet.param_groups[0]['lr']}")
     train_logs = train_epoch.run(train_loader)
     train_record.append(train_logs)
-    valid_logs = valid_epoch.run(valid_loader2)
-    valid_record.append(valid_logs)
-    torch.save(unet, "model-exp17-"+str(epoch)+".pth")
+    torch.save(unet, "model-exp5.pth")
 
-    with open('exp-17-train.txt', 'wb') as f:
+    with open('exp-5-train.txt', 'wb') as f:
         pickle.dump(train_record, f)
-'''
 
 print("VALIDATING...")
 valid_logs = valid_epoch.run(valid_loader)
 valid_record.append(valid_logs)
-with open('exp-17-valid.txt', 'wb') as f:
+with open('exp-5-valid.txt', 'wb') as f:
     pickle.dump(valid_record, f)

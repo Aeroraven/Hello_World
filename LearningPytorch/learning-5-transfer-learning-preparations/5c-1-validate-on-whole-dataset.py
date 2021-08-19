@@ -240,19 +240,19 @@ unet = smp.Unet(
 unet.encoder = model.encoder_q.encoder
 unet = unet.to("cuda")
 
-unet = torch.load("model-moco-medical-without-transfer-sz50-2.pth").to("cuda")
+unet = torch.load("model-exp16-80b.pth").to("cuda")
 preproc_fn = smp.encoders.get_preprocessing_fn("resnet34")
 train_dataset = SegDataset(
-    r"D:\2\train\imgs",
-    r"D:\2\train\masks",
+    r"D:\liver1\liver1\train\imgs",
+    r"D:\liver1\liver1\train\masks",
     augmentation=pet_augmentation(),
     preprocessing=get_preprocessing(preproc_fn),
     classes=['tissue', 'pancreas'],
     maxsize=150
 )
 valid_dataset = SegDataset(
-    r"D:\2\test\imgs",
-    r"D:\2\test\masks",
+    r"D:\liver1\liver1\test\imgs",
+    r"D:\liver1\liver1\test\masks",
     augmentation=pet_augmentation_valid(),
     preprocessing=get_preprocessing(preproc_fn),
     classes=['tissue', 'pancreas'],
@@ -260,7 +260,7 @@ valid_dataset = SegDataset(
 )
 train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=2,shuffle=True)
 valid_loader = torch.utils.data.DataLoader(valid_dataset, batch_size=2,shuffle=True)
-data_root = r'D:\2'
+data_root = r'D:\liver1\liver1'
 lr=3e-4
 x_train_dir = os.path.join(data_root, 'train/imgs')
 y_train_dir = os.path.join(data_root, 'train/masks')

@@ -22,8 +22,6 @@ from util import run
 import pickle
 from util import save
 import random
-from network.srnet import *
-from network.base import *
 
 
 def visualize_assist(**kwargs):
@@ -72,8 +70,8 @@ def pet_augmentation():
     transform_list = [
         albu.Resize(320, 320),
         albu.HorizontalFlip(p=0.5),
-        albu.MultiplicativeNoise(p=0.7,multiplier=(0.8, 1.2),elementwise=True),
-        albu.GaussianBlur(p=0.5,blur_limit=3)
+        albu.MultiplicativeNoise(p=0.7, multiplier=(0.8, 1.2), elementwise=True),
+        albu.GaussianBlur(p=0.5, blur_limit=3)
     ]
     return albu.Compose(transform_list)
 
@@ -83,6 +81,7 @@ def pet_augmentation_valid():
         albu.Resize(320, 320),
     ]
     return albu.Compose(transform_list)
+
 
 class ArvnDataset_Pet_Constrastive(torchdata.Dataset):
     def __init__(self,
@@ -201,6 +200,38 @@ class SegDataset(torch.utils.data.Dataset):
         return min(self.maxsize, len(self.ids))
 
 
+def load_unet_weights(unet, root, verbose=False):
+    backbone = torch.load(root)
+    backbone_state_dict = backbone.state_dict()
+    state = unet.state_dict()
+    keys = [k for k, _ in state.items()]
+    for k in keys:
+        if k in backbone.state_dict():
+            try:
+                if 'segmentation_head' not in k:
+                    state[k] = backbone.state_dict()[k]
+            except Exception as e:
+                print(f'mismatch error = {e}')
+            if verbose:
+                print(f'transfer {k}')
+
+    unet.load_state_dict(state)
+    return unet
+
+
+def fix_bn(m):
+    classname = m.__class__.__name__
+    print(classname)
+    if classname.find('BatchNorm') != -1:
+        m.eval()
+        m.weight.requires_grad = False
+        m.bias.requires_grad = False
+    if classname.find('BatchNorm2d') != -1:
+        m.eval()
+        m.weight.requires_grad = False
+        m.bias.requires_grad = False
+
+
 def visualize_output(dataset, model, modelp, idx):
     filenamex, imagex, maskx = dataset[idx]
     imagex = dataset.get_original_image(idx)
@@ -221,25 +252,6 @@ def visualize_output(dataset, model, modelp, idx):
                       predict_prob=output_yp, predict_mask=output_ypf)
 
 
-def load_unet_weights(unet, root, verbose=False):
-    backbone = torch.load(root)
-    backbone_state_dict = backbone.state_dict()
-    state = unet.state_dict()
-    keys = [k for k, _ in state.items()]
-    for k in keys:
-        if k in backbone.state_dict():
-            try:
-                if 'segmentation_head' not in k:
-                    state[k] = backbone.state_dict()[k]
-            except Exception as e:
-                print(f'mismatch error = {e}')
-            if verbose:
-                print(f'transfer {k}')
-
-    unet.load_state_dict(state)
-    return unet
-
-
 DEVICE = "cuda"
 SAVE_INTERVAL = 1
 root = r'C:\Users\huang\Desktop\wen\MRP\MRP'
@@ -253,38 +265,30 @@ unet = smp.Unet(
     classes=2,
     activation=None,
 )
-unet = load_unet_weights(unet,"model-exp4-ss.pth")
-unet = torch.load("model-exp17-73.pth")
+unet = load_unet_weights(unet, "model-exp10-ss.pth")
+unet.train()
+unet.encoder.apply(fix_bn)
 preproc_fn = smp.encoders.get_preprocessing_fn("resnet34")
 train_dataset = SegDataset(
-    r"D:\liver1\liver1\train\imgs",
-    r"D:\liver1\liver1\train\masks",
+    r"D:\liver2\liver2\train-150",
+    r"D:\liver2\liver2\train\masks",
     augmentation=pet_augmentation(),
     preprocessing=get_preprocessing(preproc_fn),
     classes=['tissue', 'pancreas'],
-    maxsize=150
+    maxsize=99999
 )
 valid_dataset = SegDataset(
-    r"D:\liver1\liver1\test\imgs",
-    r"D:\liver1\liver1\test\masks",
+    r"D:\liver2\liver2\test\imgs",
+    r"D:\liver2\liver2\test\masks",
     augmentation=pet_augmentation_valid(),
     preprocessing=get_preprocessing(preproc_fn),
     classes=['tissue', 'pancreas'],
     maxsize=99999
 )
-valid_dataset2 = SegDataset(
-    r"D:\liver1\liver1\test\imgs",
-    r"D:\liver1\liver1\test\masks",
-    augmentation=pet_augmentation_valid(),
-    preprocessing=get_preprocessing(preproc_fn),
-    classes=['tissue', 'pancreas'],
-    maxsize=100
-)
-train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=2, shuffle=True)
-valid_loader = torch.utils.data.DataLoader(valid_dataset, batch_size=2, shuffle=True)
-valid_loader2 = torch.utils.data.DataLoader(valid_dataset2, batch_size=2, shuffle=True)
-data_root = r'D:\liver1\liver1'
-lr = 3e-4
+train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=2, shuffle=True, pin_memory=True)
+valid_loader = torch.utils.data.DataLoader(valid_dataset, batch_size=2, shuffle=True, pin_memory=True)
+data_root = r'D:\liver2\liver2'
+lr = 3e-5
 x_train_dir = os.path.join(data_root, 'train-150')
 y_train_dir = os.path.join(data_root, 'train/masks')
 x_test_dir = os.path.join(data_root, 'test/imgs')
@@ -315,22 +319,18 @@ valid_epoch = run.ValidEpoch(
 train_record = []
 valid_record = []
 epochs = 100
-'''
-for epoch in range(57,epochs):
+for epoch in range(epochs):
     optimizer_unet.param_groups[0]['lr'] = lr * (math.pow(0.96, epoch))
     print(f"current {epoch} lr={optimizer_unet.param_groups[0]['lr']}")
     train_logs = train_epoch.run(train_loader)
     train_record.append(train_logs)
-    valid_logs = valid_epoch.run(valid_loader2)
-    valid_record.append(valid_logs)
-    torch.save(unet, "model-exp17-"+str(epoch)+".pth")
+    torch.save(unet, "model-exp13.pth")
 
-    with open('exp-17-train.txt', 'wb') as f:
+    with open('exp-13-train.txt', 'wb') as f:
         pickle.dump(train_record, f)
-'''
 
 print("VALIDATING...")
 valid_logs = valid_epoch.run(valid_loader)
 valid_record.append(valid_logs)
-with open('exp-17-valid.txt', 'wb') as f:
+with open('exp-13-valid.txt', 'wb') as f:
     pickle.dump(valid_record, f)

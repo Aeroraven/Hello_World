@@ -235,18 +235,19 @@ unet = smp.Unet(
     classes=2,
     activation=None,
 )
+unet = torch.load("model-exp1.pth")
 preproc_fn = smp.encoders.get_preprocessing_fn("resnet34")
 train_dataset = SegDataset(
-    r"D:\liver2\liver2\train-150",
-    r"D:\liver2\liver2\train\masks",
+    r"D:\liver1\liver1\train\imgs",
+    r"D:\liver1\liver1\train\masks",
     augmentation=pet_augmentation_valid(),
     preprocessing=get_preprocessing(preproc_fn),
     classes=['tissue', 'pancreas'],
     maxsize=99999
 )
 valid_dataset = SegDataset(
-    r"D:\liver2\liver2\test\imgs",
-    r"D:\liver2\liver2\test\masks",
+    r"D:\liver1\liver1\test\imgs",
+    r"D:\liver1\liver1\test\masks",
     augmentation=pet_augmentation_valid(),
     preprocessing=get_preprocessing(preproc_fn),
     classes=['tissue', 'pancreas'],
@@ -254,7 +255,7 @@ valid_dataset = SegDataset(
 )
 train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=2, shuffle=True)
 valid_loader = torch.utils.data.DataLoader(valid_dataset, batch_size=2, shuffle=True)
-data_root = r'D:\liver2\liver2'
+data_root = r'D:\liver1\liver1'
 lr = 3e-5
 x_train_dir = os.path.join(data_root, 'train-150')
 y_train_dir = os.path.join(data_root, 'train/masks')
@@ -286,6 +287,7 @@ valid_epoch = run.ValidEpoch(
 train_record = []
 valid_record = []
 epochs = 100
+'''
 for epoch in range(epochs):
     optimizer_unet.param_groups[0]['lr'] = lr * (math.pow(0.96, epoch))
     print(f"current {epoch} lr={optimizer_unet.param_groups[0]['lr']}")
@@ -295,7 +297,7 @@ for epoch in range(epochs):
 
     with open('exp-1-train.txt', 'wb') as f:
         pickle.dump(train_record, f)
-
+'''
 print("VALIDATING...")
 valid_logs = valid_epoch.run(valid_loader)
 valid_record.append(valid_logs)

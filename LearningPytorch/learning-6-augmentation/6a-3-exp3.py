@@ -238,7 +238,7 @@ preproc_fn = smp.encoders.get_preprocessing_fn("resnet34")
 train_dataset = SegDataset(
     r"D:\liver2\liver2\train-150",
     r"D:\liver2\liver2\train\masks",
-    augmentation=pet_augmentation_valid(),
+    augmentation=pet_augmentation(),
     preprocessing=get_preprocessing(preproc_fn),
     classes=['tissue', 'pancreas'],
     maxsize=99999

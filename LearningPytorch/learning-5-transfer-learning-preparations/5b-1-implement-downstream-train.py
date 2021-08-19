@@ -70,11 +70,19 @@ def pet_augmentation():
     transform_list = [
         albu.Resize(320, 320),
         albu.HorizontalFlip(p=0.5),
-        albu.ToSepia(p=0.2),
-        albu.ToGray(p=0.3),
+        albu.MultiplicativeNoise(p=0.7, multiplier=(0.5, 1.5), elementwise=True),
+        albu.GaussianBlur(blur_limit=3, p=0.3, always_apply=False)
+    ]
+    return albu.Compose(transform_list)
+
+def pet_augmentation_valid():
+    transform_list = [
+        albu.Resize(320, 320),
+        albu.HorizontalFlip(p=0.5),
         albu.RandomRotate90(p=0.5),
         albu.VerticalFlip(p=0.5),
-        albu.GaussianBlur(blur_limit=5, p=0.3, always_apply=False)
+        albu.MultiplicativeNoise(p=0.7, multiplier=(0.5, 1.5), elementwise=True),
+        albu.GaussianBlur(blur_limit=3, p=0.3, always_apply=False)
     ]
     return albu.Compose(transform_list)
 
@@ -222,7 +230,7 @@ root = r'C:\Users\huang\Desktop\wen\MRP\MRP'
 experiment = 'ss-test'
 save_root = os.path.join(root, 'results/' + experiment)
 public_save_root = os.path.join(root, 'results')
-pretrained_model_dict = torch.load(r"moco-pancreas-02.pth.tar")
+pretrained_model_dict = torch.load(r"checkpoint_exp16_0009.pth.tar")
 model = moco_builder.MoCo(PetNet_V2, K=1024)
 model.load_state_dict(pretrained_model_dict['state_dict'])
 unet = smp.Unet(
@@ -231,30 +239,38 @@ unet = smp.Unet(
     classes=2,
     activation=None,
 )
-unet.encoder = model.encoder_q.encoder
+unet.encoder = model.encoder_k.encoder
 unet = unet.to("cuda")
 
-# unet = torch.load("model-moco-medical.pth")
 preproc_fn = smp.encoders.get_preprocessing_fn("resnet34")
 train_dataset = SegDataset(
-    r"D:\2\train-150",
-    r"D:\2\train\masks",
-    augmentation=pet_augmentation(),
+    r"D:\liver2\liver2\train-150",
+    r"D:\liver2\liver2\train\masks",
+    augmentation=pet_augmentation_valid(),
     preprocessing=get_preprocessing(preproc_fn),
     classes=['tissue', 'pancreas'],
-    maxsize=9999
+    maxsize=65536
 )
 valid_dataset = SegDataset(
-    r"D:\2\test\imgs",
-    r"D:\2\test\masks",
-    augmentation=pet_augmentation(),
+    r"D:\liver2\liver2\test\imgs",
+    r"D:\liver2\liver2\test\masks",
+    augmentation=pet_augmentation_valid(),
+    preprocessing=get_preprocessing(preproc_fn),
+    classes=['tissue', 'pancreas'],
+    maxsize=99999
+)
+valid_dataset2 = SegDataset(
+    r"D:\liver2\liver2\test\imgs",
+    r"D:\liver2\liver2\test\masks",
+    augmentation=pet_augmentation_valid(),
     preprocessing=get_preprocessing(preproc_fn),
     classes=['tissue', 'pancreas'],
     maxsize=150
 )
 train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=2,shuffle=True)
 valid_loader = torch.utils.data.DataLoader(valid_dataset, batch_size=2,shuffle=True)
-data_root = r'D:\2'
+valid_loader2 = torch.utils.data.DataLoader(valid_dataset2, batch_size=2,shuffle=True)
+data_root = r'D:\liver2\liver2'
 lr=3e-4
 x_train_dir = os.path.join(data_root, 'train-150')
 y_train_dir = os.path.join(data_root, 'train/masks')
@@ -285,24 +301,22 @@ valid_epoch = run.ValidEpoch(
 )
 train_record = []
 valid_record = []
-for epoch in range(80):
+epochs = 100
+for epoch in range(epochs):
+    optimizer_unet.param_groups[0]['lr'] = lr * (math.pow(0.96, epoch))
     print(f"current {epoch} lr={optimizer_unet.param_groups[0]['lr']}")
     train_logs = train_epoch.run(train_loader)
-    if epoch % 100 == 0:
-        valid_logs = valid_epoch.run(valid_loader)
-
     train_record.append(train_logs)
+    valid_logs = valid_epoch.run(valid_loader2)
     valid_record.append(valid_logs)
+    if epoch>30:
+        torch.save(unet, "model-exp17-"+str(epoch)+"b.pth")
 
-    optimizer_unet.param_groups[0]['lr'] = lr*(math.cos(math.pi*epoch/80)+1)*0.5
-    # print('Decrease unet learning rate to' + str(optimizer_unet.param_groups[0]['lr']))
-
-    if epoch % SAVE_INTERVAL == SAVE_INTERVAL - 1:
-        # save.save_model(unet, save_root, 'model-1.pth')
-        torch.save(unet, "model-moco-medical-6-sz150.pth")
-        save.save_config(os.path.join(save_root, 'conf.txt'), os.path.join(root, 'config.py'))
-
-    with open(os.path.join(save_root, 'trainlogs-5.txt'), 'wb') as f:
+    with open('exp-17-train.txt', 'wb') as f:
         pickle.dump(train_record, f)
-    with open(os.path.join(save_root, 'validlogs-5.txt'), 'wb') as f:
-        pickle.dump(valid_record, f)
+
+print("VALIDATING...")
+valid_logs = valid_epoch.run(valid_loader)
+valid_record.append(valid_logs)
+with open('exp-17-valid.txt', 'wb') as f:
+    pickle.dump(valid_record, f)
