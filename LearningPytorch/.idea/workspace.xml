@@ -2,26 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="459ebf53-3682-4428-93a8-a1d2a3c0a6ba" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/learning-1-tutorials/other_tensorflow_import.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/learning-6-augmentation/6a-10-exp10.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/learning-6-augmentation/6a-11-exp11.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/learning-6-augmentation/6a-12-exp12.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/learning-6-augmentation/6a-13-exp13.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/learning-6-augmentation/6a-14-exp14.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/learning-6-augmentation/6a-15-exp15.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/learning-6-augmentation/6a-5-exp5.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/learning-6-augmentation/6a-9-exp9.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/learning-6-augmentation/6a-0-pickle-dumps.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/learning-6-augmentation/6b-1-expb1.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/learning-6-augmentation/6b-2-expb2.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/learning-6-augmentation/6b-3-expb3.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/learning-7-cubic-datasets/7b-1-nibabel.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/learning-4-contrastive-learning-preparations/4d-2-using-medical-dataset.py" beforeDir="false" afterPath="$PROJECT_DIR$/learning-4-contrastive-learning-preparations/4d-2-using-medical-dataset.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/learning-5-transfer-learning-preparations/5b-1-implement-downstream-train.py" beforeDir="false" afterPath="$PROJECT_DIR$/learning-5-transfer-learning-preparations/5b-1-implement-downstream-train.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/learning-5-transfer-learning-preparations/5c-1-validate-on-whole-dataset.py" beforeDir="false" afterPath="$PROJECT_DIR$/learning-5-transfer-learning-preparations/5c-1-validate-on-whole-dataset.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/learning-6-augmentation/6a-1-exp1.py" beforeDir="false" afterPath="$PROJECT_DIR$/learning-6-augmentation/6a-1-exp1.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/learning-6-augmentation/6a-2-exp2.py" beforeDir="false" afterPath="$PROJECT_DIR$/learning-6-augmentation/6a-2-exp2.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/learning-6-augmentation/6a-3-exp3.py" beforeDir="false" afterPath="$PROJECT_DIR$/learning-6-augmentation/6a-3-exp3.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/learning-6-augmentation/6a-4-exp4.py" beforeDir="false" afterPath="$PROJECT_DIR$/learning-6-augmentation/6a-4-exp4.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/learning-6-augmentation/exp-1-train.txt" beforeDir="false" afterPath="$PROJECT_DIR$/learning-6-augmentation/exp-1-train.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/learning-6-augmentation/exp-1-valid.txt" beforeDir="false" afterPath="$PROJECT_DIR$/learning-6-augmentation/exp-1-valid.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/learning-6-augmentation/exp-2-train.txt" beforeDir="false" afterPath="$PROJECT_DIR$/learning-6-augmentation/exp-2-train.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/learning-6-augmentation/exp-2-valid.txt" beforeDir="false" afterPath="$PROJECT_DIR$/learning-6-augmentation/exp-2-valid.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,6 +26,14 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
   <component name="ProjectId" id="1wQYgaIrqExpScTYkmi5vQ8uMKZ" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -50,8 +46,8 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
   </component>
-  <component name="RunManager" selected="Python.6a-14-exp14">
-    <configuration name="4d-2-using-medical-dataset" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Python.6b-3-expb3">
+    <configuration name="6a-0-pickle-dumps" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="LearningPytorch" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -59,53 +55,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/learning-4-contrastive-learning-preparations" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/learning-6-augmentation" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/learning-4-contrastive-learning-preparations/4d-2-using-medical-dataset.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="5b-1-implement-downstream-train" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="LearningPytorch" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/learning-5-transfer-learning-preparations" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/learning-5-transfer-learning-preparations/5b-1-implement-downstream-train.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="5c-1-validate-on-whole-dataset" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="LearningPytorch" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/learning-5-transfer-learning-preparations" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/learning-5-transfer-learning-preparations/5c-1-validate-on-whole-dataset.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/learning-6-augmentation/6a-0-pickle-dumps.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -135,7 +89,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="6a-4-exp4" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="6b-1-expb1" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="LearningPytorch" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -147,7 +101,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/learning-6-augmentation/6a-4-exp4.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/learning-6-augmentation/6b-1-expb1.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -156,13 +110,76 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="6b-2-expb2" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="LearningPytorch" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/learning-6-augmentation" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/learning-6-augmentation/6b-2-expb2.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="6b-3-expb3" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="LearningPytorch" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/learning-6-augmentation" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/learning-6-augmentation/6b-3-expb3.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="7b-1-nibabel" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+      <module name="LearningPytorch" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/learning-7-cubic-datasets" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/learning-7-cubic-datasets/7b-1-nibabel.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="true" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.6b-3-expb3" />
+        <item itemvalue="Python.6b-2-expb2" />
+        <item itemvalue="Python.6b-1-expb1" />
+        <item itemvalue="Python.6a-0-pickle-dumps" />
         <item itemvalue="Python.6a-14-exp14" />
-        <item itemvalue="Python.6a-4-exp4" />
-        <item itemvalue="Python.5b-1-implement-downstream-train" />
-        <item itemvalue="Python.5c-1-validate-on-whole-dataset" />
-        <item itemvalue="Python.4d-2-using-medical-dataset" />
       </list>
     </recent_temporary>
   </component>
