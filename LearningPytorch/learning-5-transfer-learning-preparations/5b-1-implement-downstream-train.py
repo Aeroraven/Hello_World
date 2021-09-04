@@ -70,19 +70,14 @@ def pet_augmentation():
     transform_list = [
         albu.Resize(320, 320),
         albu.HorizontalFlip(p=0.5),
-        albu.MultiplicativeNoise(p=0.7, multiplier=(0.5, 1.5), elementwise=True),
-        albu.GaussianBlur(blur_limit=3, p=0.3, always_apply=False)
+        albu.GaussianBlur(blur_limit=7, p=0.3, always_apply=False),
+        albu.MultiplicativeNoise(p=0.7, multiplier=(0.85, 0.9), elementwise=True),
     ]
     return albu.Compose(transform_list)
 
 def pet_augmentation_valid():
     transform_list = [
         albu.Resize(320, 320),
-        albu.HorizontalFlip(p=0.5),
-        albu.RandomRotate90(p=0.5),
-        albu.VerticalFlip(p=0.5),
-        albu.MultiplicativeNoise(p=0.7, multiplier=(0.5, 1.5), elementwise=True),
-        albu.GaussianBlur(blur_limit=3, p=0.3, always_apply=False)
     ]
     return albu.Compose(transform_list)
 
@@ -226,11 +221,11 @@ def visualize_output(dataset, model, modelp, idx):
 
 DEVICE = "cuda"
 SAVE_INTERVAL = 1
-root = r'C:\Users\huang\Desktop\wen\MRP\MRP'
+root = r'E:\Users\huang\Desktop\wen\MRP\MRP'
 experiment = 'ss-test'
 save_root = os.path.join(root, 'results/' + experiment)
 public_save_root = os.path.join(root, 'results')
-pretrained_model_dict = torch.load(r"checkpoint_exp16_0009.pth.tar")
+pretrained_model_dict = torch.load(r"checkpoint_moco_expb4_0007.pth.tar")
 model = moco_builder.MoCo(PetNet_V2, K=1024)
 model.load_state_dict(pretrained_model_dict['state_dict'])
 unet = smp.Unet(
@@ -244,24 +239,24 @@ unet = unet.to("cuda")
 
 preproc_fn = smp.encoders.get_preprocessing_fn("resnet34")
 train_dataset = SegDataset(
-    r"D:\liver2\liver2\train-150",
-    r"D:\liver2\liver2\train\masks",
+    r"E:\liver2\liver2\train-150",
+    r"E:\liver2\liver2\train\masks",
     augmentation=pet_augmentation_valid(),
     preprocessing=get_preprocessing(preproc_fn),
     classes=['tissue', 'pancreas'],
     maxsize=65536
 )
 valid_dataset = SegDataset(
-    r"D:\liver2\liver2\test\imgs",
-    r"D:\liver2\liver2\test\masks",
+    r"E:\liver2\liver2\test\imgs",
+    r"E:\liver2\liver2\test\masks",
     augmentation=pet_augmentation_valid(),
     preprocessing=get_preprocessing(preproc_fn),
     classes=['tissue', 'pancreas'],
     maxsize=99999
 )
 valid_dataset2 = SegDataset(
-    r"D:\liver2\liver2\test\imgs",
-    r"D:\liver2\liver2\test\masks",
+    r"E:\liver2\liver2\test\imgs",
+    r"E:\liver2\liver2\test\masks",
     augmentation=pet_augmentation_valid(),
     preprocessing=get_preprocessing(preproc_fn),
     classes=['tissue', 'pancreas'],
@@ -270,7 +265,7 @@ valid_dataset2 = SegDataset(
 train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=2,shuffle=True)
 valid_loader = torch.utils.data.DataLoader(valid_dataset, batch_size=2,shuffle=True)
 valid_loader2 = torch.utils.data.DataLoader(valid_dataset2, batch_size=2,shuffle=True)
-data_root = r'D:\liver2\liver2'
+data_root = r'E:\liver2\liver2'
 lr=3e-4
 x_train_dir = os.path.join(data_root, 'train-150')
 y_train_dir = os.path.join(data_root, 'train/masks')
@@ -309,14 +304,14 @@ for epoch in range(epochs):
     train_record.append(train_logs)
     valid_logs = valid_epoch.run(valid_loader2)
     valid_record.append(valid_logs)
-    if epoch>30:
-        torch.save(unet, "model-exp17-"+str(epoch)+"b.pth")
+    if epoch>20:
+        torch.save(unet, "model-expb4-"+str(epoch)+"b.pth")
 
-    with open('exp-17-train.txt', 'wb') as f:
+    with open('exp-b4-train.txt', 'wb') as f:
         pickle.dump(train_record, f)
 
 print("VALIDATING...")
 valid_logs = valid_epoch.run(valid_loader)
 valid_record.append(valid_logs)
-with open('exp-17-valid.txt', 'wb') as f:
+with open('exp-b4-valid.txt', 'wb') as f:
     pickle.dump(valid_record, f)

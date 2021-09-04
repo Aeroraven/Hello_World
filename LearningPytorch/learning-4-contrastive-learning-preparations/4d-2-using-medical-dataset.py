@@ -44,8 +44,8 @@ def pet_augmentation():
     transform_list = [
         albu.Resize(320, 320),
         albu.HorizontalFlip(p=0.5),
-        albu.MultiplicativeNoise(p=0.7, multiplier=(0.8, 1.2), elementwise=True),
-        albu.GaussianBlur(blur_limit=3, p=0.5, always_apply=False)
+        albu.GaussianBlur(p=0.5, blur_limit=11),
+        albu.MultiplicativeNoise(p=0.8, multiplier=(0.8,0.9), elementwise=True)
     ]
     return albu.Compose(transform_list)
 
@@ -215,7 +215,7 @@ class PetNet_V2(nn.Module):
         return x
 
 
-data_dir = r"D:\liver2\liver2\train"
+data_dir = r"E:\liver2\liver2\train"
 train_dir = data_dir
 preproc_fn = smp.encoders.get_preprocessing_fn("resnet34")
 train_dataset = ArvnDataset_Pet_Constrastive(train_dir, ["imgs"], pet_augmentation(),
@@ -236,4 +236,4 @@ for epoch in range(epoches):
         'arch': "resnet34",
         'state_dict': model.state_dict(),
         'optimizer': optimizer.state_dict(),
-    }, is_best=False, filename='checkpoint_exp16_{:04d}.pth.tar'.format(epoch))
+    }, is_best=False, filename='checkpoint_moco_expb4_{:04d}.pth.tar'.format(epoch))
