@@ -1,0 +1,250 @@
+C:\Users\huang\AppData\Local\Programs\Python\Python39\python.exe C:/Users/huang/Documents/GitHub/Hello_World/LearningPytorch/learning-8-augmentation-2/exp-n1/6a-2-exp2.py
+current 0 lr=0.0003
+train:   0%|          | 0/38 [00:00<?, ?it/s]C:\Users\huang\AppData\Local\Programs\Python\Python39\lib\site-packages\torch\nn\functional.py:718: UserWarning: Named tensors and all their associated APIs are an experimental feature and subject to change. Please do not use them for anything important until they are released as stable. (Triggered internally at  ..\c10/core/TensorImpl.h:1156.)
+  return torch.max_pool2d(input, kernel_size, stride, padding, dilation, ceil_mode)
+train: 100%|██████████| 38/38 [00:12<00:00,  3.09it/s, dice_loss + focal_loss - 0.2586, iou_score - 0.2346, dice - 0.333]
+valid: 100%|██████████| 75/75 [00:07<00:00, 10.29it/s, dice_loss + focal_loss - 0.49, iou_score - 0.1432, dice - 0.1591]
+current 1 lr=0.00028799999999999995
+train: 100%|██████████| 38/38 [00:10<00:00,  3.51it/s, dice_loss + focal_loss - 0.1968, iou_score - 0.3892, dice - 0.5178]
+valid: 100%|██████████| 75/75 [00:07<00:00,  9.62it/s, dice_loss + focal_loss - 0.2352, iou_score - 0.1312, dice - 0.1368]
+current 2 lr=0.00027647999999999995
+train: 100%|██████████| 38/38 [00:12<00:00,  3.15it/s, dice_loss + focal_loss - 0.1854, iou_score - 0.3825, dice - 0.5044]
+valid: 100%|██████████| 75/75 [00:08<00:00,  8.63it/s, dice_loss + focal_loss - 0.2235, iou_score - 0.1979, dice - 0.2239]
+current 3 lr=0.00026542079999999994
+train: 100%|██████████| 38/38 [00:11<00:00,  3.23it/s, dice_loss + focal_loss - 0.1723, iou_score - 0.4292, dice - 0.5392]
+valid: 100%|██████████| 75/75 [00:08<00:00,  8.71it/s, dice_loss + focal_loss - 0.3172, iou_score - 0.3652, dice - 0.387]
+current 4 lr=0.00025480396799999993
+train: 100%|██████████| 38/38 [00:12<00:00,  3.11it/s, dice_loss + focal_loss - 0.168, iou_score - 0.4295, dice - 0.5463]
+valid: 100%|██████████| 75/75 [00:09<00:00,  8.12it/s, dice_loss + focal_loss - 0.2901, iou_score - 0.408, dice - 0.4552]
+current 5 lr=0.00024461180927999994
+train: 100%|██████████| 38/38 [00:12<00:00,  2.96it/s, dice_loss + focal_loss - 0.1637, iou_score - 0.418, dice - 0.5377]
+valid: 100%|██████████| 75/75 [00:09<00:00,  8.22it/s, dice_loss + focal_loss - 0.292, iou_score - 0.2694, dice - 0.3043]
+current 6 lr=0.00023482733690879994
+train: 100%|██████████| 38/38 [00:12<00:00,  3.03it/s, dice_loss + focal_loss - 0.1469, iou_score - 0.4596, dice - 0.5775]
+valid: 100%|██████████| 75/75 [00:09<00:00,  8.27it/s, dice_loss + focal_loss - 0.1735, iou_score - 0.4273, dice - 0.4968]
+current 7 lr=0.00022543424343244792
+train: 100%|██████████| 38/38 [00:13<00:00,  2.89it/s, dice_loss + focal_loss - 0.1358, iou_score - 0.51, dice - 0.6134]
+valid: 100%|██████████| 75/75 [00:08<00:00,  8.50it/s, dice_loss + focal_loss - 0.1926, iou_score - 0.3536, dice - 0.4229]
+current 8 lr=0.00021641687369514998
+train: 100%|██████████| 38/38 [00:12<00:00,  3.14it/s, dice_loss + focal_loss - 0.1252, iou_score - 0.5553, dice - 0.674]
+valid: 100%|██████████| 75/75 [00:08<00:00,  8.98it/s, dice_loss + focal_loss - 0.222, iou_score - 0.4221, dice - 0.4767]
+current 9 lr=0.000207760198747344
+train: 100%|██████████| 38/38 [00:13<00:00,  2.86it/s, dice_loss + focal_loss - 0.1341, iou_score - 0.5188, dice - 0.6224]
+valid: 100%|██████████| 75/75 [00:08<00:00,  8.53it/s, dice_loss + focal_loss - 0.244, iou_score - 0.4269, dice - 0.4796]
+current 10 lr=0.0001994497907974502
+train: 100%|██████████| 38/38 [00:13<00:00,  2.88it/s, dice_loss + focal_loss - 0.1233, iou_score - 0.5065, dice - 0.611]
+valid: 100%|██████████| 75/75 [00:08<00:00,  9.16it/s, dice_loss + focal_loss - 0.3769, iou_score - 0.1641, dice - 0.2474]
+current 11 lr=0.00019147179916555223
+train: 100%|██████████| 38/38 [00:12<00:00,  3.15it/s, dice_loss + focal_loss - 0.1243, iou_score - 0.5179, dice - 0.6132]
+valid: 100%|██████████| 75/75 [00:09<00:00,  7.88it/s, dice_loss + focal_loss - 0.3077, iou_score - 0.2103, dice - 0.2558]
+current 12 lr=0.0001838129271989301
+train: 100%|██████████| 38/38 [00:11<00:00,  3.22it/s, dice_loss + focal_loss - 0.1076, iou_score - 0.569, dice - 0.6651]
+valid: 100%|██████████| 75/75 [00:08<00:00,  8.55it/s, dice_loss + focal_loss - 0.8943, iou_score - 0.1207, dice - 0.1883]
+current 13 lr=0.0001764604101109729
+train: 100%|██████████| 38/38 [00:12<00:00,  2.98it/s, dice_loss + focal_loss - 0.1095, iou_score - 0.5879, dice - 0.6823]
+valid: 100%|██████████| 75/75 [00:08<00:00,  8.47it/s, dice_loss + focal_loss - 0.1789, iou_score - 0.3789, dice - 0.4548]
+current 14 lr=0.00016940199370653398
+train: 100%|██████████| 38/38 [00:12<00:00,  3.00it/s, dice_loss + focal_loss - 0.09538, iou_score - 0.6179, dice - 0.7222]
+valid: 100%|██████████| 75/75 [00:08<00:00,  8.39it/s, dice_loss + focal_loss - 0.2339, iou_score - 0.3785, dice - 0.4373]
+current 15 lr=0.00016262591395827263
+train: 100%|██████████| 38/38 [00:12<00:00,  3.06it/s, dice_loss + focal_loss - 0.09499, iou_score - 0.6061, dice - 0.6981]
+valid: 100%|██████████| 75/75 [00:08<00:00,  8.85it/s, dice_loss + focal_loss - 0.2117, iou_score - 0.3339, dice - 0.3758]
+current 16 lr=0.00015612087739994173
+train: 100%|██████████| 38/38 [00:12<00:00,  3.04it/s, dice_loss + focal_loss - 0.08287, iou_score - 0.6666, dice - 0.7562]
+valid: 100%|██████████| 75/75 [00:08<00:00,  8.48it/s, dice_loss + focal_loss - 0.2637, iou_score - 0.351, dice - 0.3825]
+current 17 lr=0.00014987604230394403
+train: 100%|██████████| 38/38 [00:12<00:00,  3.07it/s, dice_loss + focal_loss - 0.08662, iou_score - 0.6581, dice - 0.7418]
+valid: 100%|██████████| 75/75 [00:08<00:00,  8.77it/s, dice_loss + focal_loss - 0.1705, iou_score - 0.468, dice - 0.5459]
+current 18 lr=0.00014388100061178626
+train: 100%|██████████| 38/38 [00:13<00:00,  2.86it/s, dice_loss + focal_loss - 0.09028, iou_score - 0.7263, dice - 0.8128]
+valid: 100%|██████████| 75/75 [00:08<00:00,  8.46it/s, dice_loss + focal_loss - 0.1704, iou_score - 0.4792, dice - 0.5407]
+current 19 lr=0.00013812576058731482
+train: 100%|██████████| 38/38 [00:12<00:00,  2.97it/s, dice_loss + focal_loss - 0.07458, iou_score - 0.7206, dice - 0.8013]
+valid: 100%|██████████| 75/75 [00:09<00:00,  8.19it/s, dice_loss + focal_loss - 0.1576, iou_score - 0.6069, dice - 0.6774]
+current 20 lr=0.0001326007301638222
+train: 100%|██████████| 38/38 [00:12<00:00,  3.07it/s, dice_loss + focal_loss - 0.08258, iou_score - 0.7172, dice - 0.7974]
+valid: 100%|██████████| 75/75 [00:08<00:00,  8.92it/s, dice_loss + focal_loss - 0.2081, iou_score - 0.4488, dice - 0.5074]
+current 21 lr=0.0001272967009572693
+train: 100%|██████████| 38/38 [00:13<00:00,  2.86it/s, dice_loss + focal_loss - 0.07352, iou_score - 0.7488, dice - 0.8311]
+valid: 100%|██████████| 75/75 [00:09<00:00,  8.24it/s, dice_loss + focal_loss - 0.1776, iou_score - 0.5023, dice - 0.5648]
+current 22 lr=0.00012220483291897852
+train: 100%|██████████| 38/38 [00:12<00:00,  3.05it/s, dice_loss + focal_loss - 0.08463, iou_score - 0.6976, dice - 0.7762]
+valid: 100%|██████████| 75/75 [00:08<00:00,  8.84it/s, dice_loss + focal_loss - 0.1894, iou_score - 0.3425, dice - 0.4164]
+current 23 lr=0.00011731663960221939
+train: 100%|██████████| 38/38 [00:12<00:00,  3.09it/s, dice_loss + focal_loss - 0.0755, iou_score - 0.7698, dice - 0.8433]
+valid: 100%|██████████| 75/75 [00:08<00:00,  8.78it/s, dice_loss + focal_loss - 0.1823, iou_score - 0.365, dice - 0.4271]
+current 24 lr=0.00011262397401813062
+train: 100%|██████████| 38/38 [00:12<00:00,  2.93it/s, dice_loss + focal_loss - 0.07561, iou_score - 0.8377, dice - 0.9037]
+valid: 100%|██████████| 75/75 [00:08<00:00,  9.31it/s, dice_loss + focal_loss - 0.1594, iou_score - 0.4466, dice - 0.5123]
+current 25 lr=0.0001081190150574054
+train: 100%|██████████| 38/38 [00:12<00:00,  3.08it/s, dice_loss + focal_loss - 0.06321, iou_score - 0.8055, dice - 0.8801]
+valid: 100%|██████████| 75/75 [00:09<00:00,  8.29it/s, dice_loss + focal_loss - 0.1751, iou_score - 0.3963, dice - 0.4556]
+current 26 lr=0.00010379425445510917
+train: 100%|██████████| 38/38 [00:12<00:00,  3.01it/s, dice_loss + focal_loss - 0.06763, iou_score - 0.7614, dice - 0.8312]
+valid: 100%|██████████| 75/75 [00:08<00:00,  8.81it/s, dice_loss + focal_loss - 0.2158, iou_score - 0.3278, dice - 0.3931]
+current 27 lr=9.96424842769048e-05
+train: 100%|██████████| 38/38 [00:12<00:00,  3.07it/s, dice_loss + focal_loss - 0.07009, iou_score - 0.7173, dice - 0.8026]
+valid: 100%|██████████| 75/75 [00:08<00:00,  8.93it/s, dice_loss + focal_loss - 0.1874, iou_score - 0.5732, dice - 0.6423]
+current 28 lr=9.56567849058286e-05
+train: 100%|██████████| 38/38 [00:12<00:00,  2.97it/s, dice_loss + focal_loss - 0.07728, iou_score - 0.7737, dice - 0.8462]
+valid: 100%|██████████| 75/75 [00:08<00:00,  9.30it/s, dice_loss + focal_loss - 0.2208, iou_score - 0.5036, dice - 0.5741]
+current 29 lr=9.183051350959545e-05
+train: 100%|██████████| 38/38 [00:12<00:00,  3.09it/s, dice_loss + focal_loss - 0.0591, iou_score - 0.7466, dice - 0.8246]
+valid: 100%|██████████| 75/75 [00:08<00:00,  9.17it/s, dice_loss + focal_loss - 0.162, iou_score - 0.5661, dice - 0.6347]
+current 30 lr=8.815729296921162e-05
+train: 100%|██████████| 38/38 [00:12<00:00,  3.08it/s, dice_loss + focal_loss - 0.04786, iou_score - 0.8252, dice - 0.8905]
+valid: 100%|██████████| 75/75 [00:08<00:00,  8.71it/s, dice_loss + focal_loss - 0.18, iou_score - 0.5234, dice - 0.5857]
+current 31 lr=8.463100125044317e-05
+train: 100%|██████████| 38/38 [00:12<00:00,  3.08it/s, dice_loss + focal_loss - 0.04573, iou_score - 0.8076, dice - 0.879]
+valid: 100%|██████████| 75/75 [00:08<00:00,  8.97it/s, dice_loss + focal_loss - 0.1909, iou_score - 0.6021, dice - 0.6641]
+current 32 lr=8.124576120042543e-05
+train: 100%|██████████| 38/38 [00:12<00:00,  3.01it/s, dice_loss + focal_loss - 0.0474, iou_score - 0.8728, dice - 0.9298]
+valid: 100%|██████████| 75/75 [00:09<00:00,  7.88it/s, dice_loss + focal_loss - 0.1865, iou_score - 0.5961, dice - 0.6627]
+current 33 lr=7.799593075240842e-05
+train: 100%|██████████| 38/38 [00:12<00:00,  3.04it/s, dice_loss + focal_loss - 0.05023, iou_score - 0.8554, dice - 0.9177]
+valid: 100%|██████████| 75/75 [00:08<00:00,  9.31it/s, dice_loss + focal_loss - 0.184, iou_score - 0.5736, dice - 0.63]
+current 34 lr=7.487609352231208e-05
+train: 100%|██████████| 38/38 [00:11<00:00,  3.20it/s, dice_loss + focal_loss - 0.04795, iou_score - 0.8661, dice - 0.9151]
+valid: 100%|██████████| 75/75 [00:08<00:00,  8.96it/s, dice_loss + focal_loss - 0.213, iou_score - 0.5493, dice - 0.5976]
+current 35 lr=7.188104978141959e-05
+train: 100%|██████████| 38/38 [00:12<00:00,  3.02it/s, dice_loss + focal_loss - 0.04059, iou_score - 0.9002, dice - 0.9467]
+valid: 100%|██████████| 75/75 [00:08<00:00,  9.10it/s, dice_loss + focal_loss - 0.1807, iou_score - 0.5917, dice - 0.6515]
+current 36 lr=6.90058077901628e-05
+train: 100%|██████████| 38/38 [00:12<00:00,  3.06it/s, dice_loss + focal_loss - 0.05019, iou_score - 0.8276, dice - 0.8799]
+valid: 100%|██████████| 75/75 [00:08<00:00,  8.78it/s, dice_loss + focal_loss - 0.1747, iou_score - 0.6105, dice - 0.6866]
+current 37 lr=6.624557547855629e-05
+train: 100%|██████████| 38/38 [00:12<00:00,  3.14it/s, dice_loss + focal_loss - 0.03932, iou_score - 0.8538, dice - 0.9082]
+valid: 100%|██████████| 75/75 [00:08<00:00,  8.87it/s, dice_loss + focal_loss - 0.1879, iou_score - 0.5295, dice - 0.5994]
+current 38 lr=6.359575245941404e-05
+train: 100%|██████████| 38/38 [00:12<00:00,  3.09it/s, dice_loss + focal_loss - 0.04827, iou_score - 0.8053, dice - 0.8576]
+valid: 100%|██████████| 75/75 [00:08<00:00,  8.78it/s, dice_loss + focal_loss - 0.1677, iou_score - 0.564, dice - 0.6453]
+current 39 lr=6.105192236103746e-05
+train: 100%|██████████| 38/38 [00:12<00:00,  3.05it/s, dice_loss + focal_loss - 0.04935, iou_score - 0.8344, dice - 0.8931]
+valid: 100%|██████████| 75/75 [00:08<00:00,  8.92it/s, dice_loss + focal_loss - 0.1914, iou_score - 0.5178, dice - 0.5891]
+current 40 lr=5.860984546659597e-05
+train: 100%|██████████| 38/38 [00:12<00:00,  3.11it/s, dice_loss + focal_loss - 0.04921, iou_score - 0.8578, dice - 0.9105]
+valid: 100%|██████████| 75/75 [00:08<00:00,  9.18it/s, dice_loss + focal_loss - 0.1931, iou_score - 0.5617, dice - 0.6277]
+current 41 lr=5.626545164793213e-05
+train: 100%|██████████| 38/38 [00:12<00:00,  3.09it/s, dice_loss + focal_loss - 0.04927, iou_score - 0.8809, dice - 0.9332]
+valid: 100%|██████████| 75/75 [00:08<00:00,  8.58it/s, dice_loss + focal_loss - 0.1998, iou_score - 0.488, dice - 0.556]
+current 42 lr=5.4014833582014844e-05
+train: 100%|██████████| 38/38 [00:12<00:00,  3.08it/s, dice_loss + focal_loss - 0.05493, iou_score - 0.8439, dice - 0.8979]
+valid: 100%|██████████| 75/75 [00:08<00:00,  8.52it/s, dice_loss + focal_loss - 0.2031, iou_score - 0.5125, dice - 0.5911]
+current 43 lr=5.185424023873425e-05
+train: 100%|██████████| 38/38 [00:12<00:00,  3.01it/s, dice_loss + focal_loss - 0.05185, iou_score - 0.8403, dice - 0.8936]
+valid: 100%|██████████| 75/75 [00:08<00:00,  9.15it/s, dice_loss + focal_loss - 0.2011, iou_score - 0.544, dice - 0.6045]
+current 44 lr=4.9780070629184875e-05
+train: 100%|██████████| 38/38 [00:12<00:00,  3.09it/s, dice_loss + focal_loss - 0.03874, iou_score - 0.9009, dice - 0.946]
+valid: 100%|██████████| 75/75 [00:08<00:00,  8.62it/s, dice_loss + focal_loss - 0.188, iou_score - 0.5641, dice - 0.6354]
+current 45 lr=4.778886780401748e-05
+train: 100%|██████████| 38/38 [00:12<00:00,  3.11it/s, dice_loss + focal_loss - 0.04555, iou_score - 0.8653, dice - 0.9147]
+valid: 100%|██████████| 75/75 [00:08<00:00,  8.82it/s, dice_loss + focal_loss - 0.2306, iou_score - 0.5502, dice - 0.6154]
+current 46 lr=4.587731309185678e-05
+train: 100%|██████████| 38/38 [00:12<00:00,  3.06it/s, dice_loss + focal_loss - 0.04525, iou_score - 0.8151, dice - 0.864]
+valid: 100%|██████████| 75/75 [00:08<00:00,  9.23it/s, dice_loss + focal_loss - 0.2005, iou_score - 0.6206, dice - 0.6856]
+current 47 lr=4.404222056818251e-05
+train: 100%|██████████| 38/38 [00:12<00:00,  3.07it/s, dice_loss + focal_loss - 0.04867, iou_score - 0.825, dice - 0.8669]
+valid: 100%|██████████| 75/75 [00:08<00:00,  9.04it/s, dice_loss + focal_loss - 0.1871, iou_score - 0.5606, dice - 0.6306]
+current 48 lr=4.2280531745455205e-05
+train: 100%|██████████| 38/38 [00:12<00:00,  3.04it/s, dice_loss + focal_loss - 0.04284, iou_score - 0.8643, dice - 0.9032]
+valid: 100%|██████████| 75/75 [00:08<00:00,  8.92it/s, dice_loss + focal_loss - 0.1977, iou_score - 0.5735, dice - 0.6416]
+current 49 lr=4.058931047563699e-05
+train: 100%|██████████| 38/38 [00:12<00:00,  3.11it/s, dice_loss + focal_loss - 0.05484, iou_score - 0.872, dice - 0.9161]
+valid: 100%|██████████| 75/75 [00:08<00:00,  8.69it/s, dice_loss + focal_loss - 0.2363, iou_score - 0.4699, dice - 0.5319]
+current 50 lr=3.896573805661151e-05
+train: 100%|██████████| 38/38 [00:12<00:00,  3.05it/s, dice_loss + focal_loss - 0.0463, iou_score - 0.8879, dice - 0.9282]
+valid: 100%|██████████| 75/75 [00:08<00:00,  8.94it/s, dice_loss + focal_loss - 0.1899, iou_score - 0.6289, dice - 0.6936]
+current 51 lr=3.7407108534347053e-05
+train: 100%|██████████| 38/38 [00:12<00:00,  3.02it/s, dice_loss + focal_loss - 0.04156, iou_score - 0.8959, dice - 0.9327]
+valid: 100%|██████████| 75/75 [00:08<00:00,  9.37it/s, dice_loss + focal_loss - 0.2091, iou_score - 0.5166, dice - 0.5851]
+current 52 lr=3.591082419297317e-05
+train: 100%|██████████| 38/38 [00:11<00:00,  3.23it/s, dice_loss + focal_loss - 0.04072, iou_score - 0.9157, dice - 0.955]
+valid: 100%|██████████| 75/75 [00:08<00:00,  8.75it/s, dice_loss + focal_loss - 0.1895, iou_score - 0.5562, dice - 0.6265]
+current 53 lr=3.4474391225254235e-05
+train: 100%|██████████| 38/38 [00:11<00:00,  3.20it/s, dice_loss + focal_loss - 0.04549, iou_score - 0.9181, dice - 0.9555]
+valid: 100%|██████████| 75/75 [00:08<00:00,  8.62it/s, dice_loss + focal_loss - 0.2199, iou_score - 0.5367, dice - 0.6008]
+current 54 lr=3.3095415576244065e-05
+train: 100%|██████████| 38/38 [00:12<00:00,  2.93it/s, dice_loss + focal_loss - 0.0486, iou_score - 0.93, dice - 0.9631]
+valid: 100%|██████████| 75/75 [00:08<00:00,  8.76it/s, dice_loss + focal_loss - 0.1811, iou_score - 0.5819, dice - 0.6407]
+current 55 lr=3.1771598953194304e-05
+train: 100%|██████████| 38/38 [00:12<00:00,  3.11it/s, dice_loss + focal_loss - 0.03061, iou_score - 0.9114, dice - 0.953]
+valid: 100%|██████████| 75/75 [00:08<00:00,  8.49it/s, dice_loss + focal_loss - 0.1802, iou_score - 0.6083, dice - 0.6743]
+current 56 lr=3.050073499506653e-05
+train: 100%|██████████| 38/38 [00:11<00:00,  3.19it/s, dice_loss + focal_loss - 0.04679, iou_score - 0.9112, dice - 0.9508]
+valid: 100%|██████████| 75/75 [00:08<00:00,  9.12it/s, dice_loss + focal_loss - 0.2227, iou_score - 0.5606, dice - 0.6162]
+current 57 lr=2.9280705595263865e-05
+train: 100%|██████████| 38/38 [00:12<00:00,  3.03it/s, dice_loss + focal_loss - 0.03707, iou_score - 0.9036, dice - 0.9472]
+valid: 100%|██████████| 75/75 [00:08<00:00,  8.76it/s, dice_loss + focal_loss - 0.1792, iou_score - 0.5974, dice - 0.6758]
+current 58 lr=2.8109477371453315e-05
+train: 100%|██████████| 38/38 [00:12<00:00,  3.15it/s, dice_loss + focal_loss - 0.04188, iou_score - 0.886, dice - 0.9266]
+valid: 100%|██████████| 75/75 [00:08<00:00,  9.21it/s, dice_loss + focal_loss - 0.2201, iou_score - 0.4707, dice - 0.5293]
+current 59 lr=2.6985098276595178e-05
+train: 100%|██████████| 38/38 [00:11<00:00,  3.19it/s, dice_loss + focal_loss - 0.0298, iou_score - 0.9136, dice - 0.9537]
+valid: 100%|██████████| 75/75 [00:08<00:00,  9.28it/s, dice_loss + focal_loss - 0.2141, iou_score - 0.5158, dice - 0.5815]
+current 60 lr=2.5905694345531372e-05
+train: 100%|██████████| 38/38 [00:11<00:00,  3.18it/s, dice_loss + focal_loss - 0.04932, iou_score - 0.8972, dice - 0.9391]
+valid: 100%|██████████| 75/75 [00:07<00:00,  9.43it/s, dice_loss + focal_loss - 0.2162, iou_score - 0.5306, dice - 0.5928]
+current 61 lr=2.4869466571710112e-05
+train: 100%|██████████| 38/38 [00:12<00:00,  3.06it/s, dice_loss + focal_loss - 0.03922, iou_score - 0.8916, dice - 0.93]
+valid: 100%|██████████| 75/75 [00:08<00:00,  8.73it/s, dice_loss + focal_loss - 0.2661, iou_score - 0.4776, dice - 0.537]
+current 62 lr=2.387468790884171e-05
+train: 100%|██████████| 38/38 [00:12<00:00,  3.07it/s, dice_loss + focal_loss - 0.04217, iou_score - 0.9297, dice - 0.9629]
+valid: 100%|██████████| 75/75 [00:08<00:00,  8.96it/s, dice_loss + focal_loss - 0.2418, iou_score - 0.4858, dice - 0.5506]
+current 63 lr=2.2919700392488037e-05
+train: 100%|██████████| 38/38 [00:12<00:00,  3.08it/s, dice_loss + focal_loss - 0.04767, iou_score - 0.9289, dice - 0.9614]
+valid: 100%|██████████| 75/75 [00:08<00:00,  8.40it/s, dice_loss + focal_loss - 0.2642, iou_score - 0.4879, dice - 0.5381]
+current 64 lr=2.2002912376788517e-05
+train: 100%|██████████| 38/38 [00:12<00:00,  3.06it/s, dice_loss + focal_loss - 0.04362, iou_score - 0.9252, dice - 0.9596]
+valid: 100%|██████████| 75/75 [00:08<00:00,  9.06it/s, dice_loss + focal_loss - 0.2391, iou_score - 0.5442, dice - 0.6069]
+current 65 lr=2.1122795881716978e-05
+train: 100%|██████████| 38/38 [00:12<00:00,  3.10it/s, dice_loss + focal_loss - 0.03184, iou_score - 0.9292, dice - 0.9625]
+valid: 100%|██████████| 75/75 [00:08<00:00,  8.91it/s, dice_loss + focal_loss - 0.182, iou_score - 0.6608, dice - 0.7318]
+current 66 lr=2.02778840464483e-05
+train: 100%|██████████| 38/38 [00:12<00:00,  3.11it/s, dice_loss + focal_loss - 0.02938, iou_score - 0.9167, dice - 0.955]
+valid: 100%|██████████| 75/75 [00:08<00:00,  8.95it/s, dice_loss + focal_loss - 0.2441, iou_score - 0.5999, dice - 0.6566]
+current 67 lr=1.9466768684590365e-05
+train: 100%|██████████| 38/38 [00:12<00:00,  3.16it/s, dice_loss + focal_loss - 0.05073, iou_score - 0.9354, dice - 0.9653]
+valid: 100%|██████████| 75/75 [00:08<00:00,  9.16it/s, dice_loss + focal_loss - 0.234, iou_score - 0.5973, dice - 0.6644]
+current 68 lr=1.868809793720675e-05
+train: 100%|██████████| 38/38 [00:12<00:00,  3.10it/s, dice_loss + focal_loss - 0.0416, iou_score - 0.9321, dice - 0.9642]
+valid: 100%|██████████| 75/75 [00:07<00:00,  9.39it/s, dice_loss + focal_loss - 0.2407, iou_score - 0.5558, dice - 0.6137]
+current 69 lr=1.7940574019718478e-05
+train: 100%|██████████| 38/38 [00:12<00:00,  3.12it/s, dice_loss + focal_loss - 0.04705, iou_score - 0.9312, dice - 0.9631]
+valid: 100%|██████████| 75/75 [00:08<00:00,  8.94it/s, dice_loss + focal_loss - 0.27, iou_score - 0.4785, dice - 0.5366]
+current 70 lr=1.722295105892974e-05
+train: 100%|██████████| 38/38 [00:12<00:00,  3.10it/s, dice_loss + focal_loss - 0.04764, iou_score - 0.9278, dice - 0.9604]
+valid: 100%|██████████| 75/75 [00:08<00:00,  9.08it/s, dice_loss + focal_loss - 0.2303, iou_score - 0.506, dice - 0.5598]
+current 71 lr=1.6534033016572547e-05
+train: 100%|██████████| 38/38 [00:12<00:00,  3.00it/s, dice_loss + focal_loss - 0.03618, iou_score - 0.9318, dice - 0.9641]
+valid: 100%|██████████| 75/75 [00:08<00:00,  8.68it/s, dice_loss + focal_loss - 0.1998, iou_score - 0.592, dice - 0.6564]
+current 72 lr=1.5872671695909644e-05
+train: 100%|██████████| 38/38 [00:12<00:00,  3.16it/s, dice_loss + focal_loss - 0.03258, iou_score - 0.9011, dice - 0.9352]
+valid: 100%|██████████| 75/75 [00:08<00:00,  8.73it/s, dice_loss + focal_loss - 0.2578, iou_score - 0.4839, dice - 0.546]
+current 73 lr=1.5237764828073258e-05
+train: 100%|██████████| 38/38 [00:11<00:00,  3.19it/s, dice_loss + focal_loss - 0.03096, iou_score - 0.9309, dice - 0.9639]
+valid: 100%|██████████| 75/75 [00:08<00:00,  9.09it/s, dice_loss + focal_loss - 0.2409, iou_score - 0.5057, dice - 0.566]
+current 74 lr=1.4628254234950327e-05
+train: 100%|██████████| 38/38 [00:12<00:00,  3.12it/s, dice_loss + focal_loss - 0.03043, iou_score - 0.9343, dice - 0.9656]
+valid: 100%|██████████| 75/75 [00:08<00:00,  9.04it/s, dice_loss + focal_loss - 0.2366, iou_score - 0.5243, dice - 0.5901]
+current 75 lr=1.4043124065552315e-05
+train: 100%|██████████| 38/38 [00:12<00:00,  3.01it/s, dice_loss + focal_loss - 0.02777, iou_score - 0.9258, dice - 0.9607]
+valid: 100%|██████████| 75/75 [00:08<00:00,  8.88it/s, dice_loss + focal_loss - 0.2374, iou_score - 0.5866, dice - 0.6479]
+current 76 lr=1.3481399102930222e-05
+train: 100%|██████████| 38/38 [00:12<00:00,  2.95it/s, dice_loss + focal_loss - 0.03834, iou_score - 0.9238, dice - 0.9587]
+valid: 100%|██████████| 75/75 [00:08<00:00,  8.75it/s, dice_loss + focal_loss - 0.2123, iou_score - 0.5597, dice - 0.6292]
+current 77 lr=1.2942143138813013e-05
+train: 100%|██████████| 38/38 [00:12<00:00,  3.05it/s, dice_loss + focal_loss - 0.03503, iou_score - 0.9373, dice - 0.9672]
+valid: 100%|██████████| 75/75 [00:08<00:00,  9.02it/s, dice_loss + focal_loss - 0.2579, iou_score - 0.4878, dice - 0.5469]
+current 78 lr=1.2424457413260492e-05
+train: 100%|██████████| 38/38 [00:12<00:00,  3.16it/s, dice_loss + focal_loss - 0.04225, iou_score - 0.9015, dice - 0.9339]
+valid: 100%|██████████| 75/75 [00:08<00:00,  8.62it/s, dice_loss + focal_loss - 0.2371, iou_score - 0.6002, dice - 0.6567]
+current 79 lr=1.1927479116730071e-05
+train:   0%|          | 0/38 [00:00<?, ?it/s]
+Traceback (most recent call last):
+  File "C:\Users\huang\Documents\GitHub\Hello_World\LearningPytorch\learning-8-augmentation-2\exp-n1\6a-2-exp2.py", line 319, in <module>
+    train_logs = train_epoch.run(train_loader)
+  File "C:\Users\huang\Documents\GitHub\Hello_World\LearningPytorch\learning-8-augmentation-2\exp-n1\util\run.py", line 73, in run
+    loss_value = loss.cpu().detach().numpy()
+KeyboardInterrupt
+
+Process finished with exit code -1073741510 (0xC000013A: interrupted by Ctrl+C)

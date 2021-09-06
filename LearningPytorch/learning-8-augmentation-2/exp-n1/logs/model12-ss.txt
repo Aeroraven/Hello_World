@@ -1,0 +1,36 @@
+C:\Users\huang\AppData\Local\Programs\Python\Python39\python.exe C:/Users/huang/Desktop/wen/MRP/MRP/main-SS-Copy3.py
+C:\Users\huang\Desktop\wen\MRP\MRP\main-SS-Copy3.py:2: DeprecationWarning: the imp module is deprecated in favour of importlib; see the module's documentation for alternative uses
+  import os, imp, pickle
+C:\Users\huang\AppData\Local\Programs\Python\Python39\lib\site-packages\albumentations\augmentations\transforms.py:1896: UserWarning: blur_limit and sigma_limit minimum value can not be both equal to 0. blur_limit minimum value changed to 3.
+  warnings.warn(
+C:\Users\huang\AppData\Local\Programs\Python\Python39\lib\site-packages\deprecate\deprecation.py:115: LightningDeprecationWarning: The `Recall` was deprecated since v1.3.0 in favor of `torchmetrics.classification.precision_recall.Recall`. It will be removed in v1.5.0.
+  stream(template_mgs % msg_args)
+C:\Users\huang\AppData\Local\Programs\Python\Python39\lib\site-packages\deprecate\deprecation.py:115: LightningDeprecationWarning: The `Precision` was deprecated since v1.3.0 in favor of `torchmetrics.classification.precision_recall.Precision`. It will be removed in v1.5.0.
+  stream(template_mgs % msg_args)
+C:\Users\huang\AppData\Local\Programs\Python\Python39\lib\site-packages\deprecate\deprecation.py:115: LightningDeprecationWarning: The `FBeta` was deprecated since v1.3.0 in favor of `torchmetrics.classification.f_beta.FBeta`. It will be removed in v1.5.0.
+  stream(template_mgs % msg_args)
+C:\Users\huang\AppData\Local\Programs\Python\Python39\lib\site-packages\deprecate\deprecation.py:115: LightningDeprecationWarning: The `Accuracy` was deprecated since v1.3.0 in favor of `torchmetrics.classification.accuracy.Accuracy`. It will be removed in v1.5.0.
+  stream(template_mgs % msg_args)
+train:   0%|          | 0/3586 [00:00<?, ?it/s]C:\Users\huang\AppData\Local\Programs\Python\Python39\lib\site-packages\torch\nn\functional.py:718: UserWarning: Named tensors and all their associated APIs are an experimental feature and subject to change. Please do not use them for anything important until they are released as stable. (Triggered internally at  ..\c10/core/TensorImpl.h:1156.)
+  return torch.max_pool2d(input, kernel_size, stride, padding, dilation, ceil_mode)
+C:\Users\huang\AppData\Local\Programs\Python\Python39\lib\site-packages\torch\nn\modules\module.py:974: UserWarning: Using a non-full backward hook when the forward contains multiple autograd Nodes is deprecated and will be removed in future versions. This hook will be missing some grad_input. Please use register_full_backward_hook to get the documented behavior.
+  warnings.warn("Using a non-full backward hook when the forward contains multiple autograd Nodes "
+C:\Users\huang\Desktop\wen\MRP\MRP\network\srnet.py:87: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  x = self.activation(x)
+train: 100%|██████████| 3586/3586 [41:24<00:00,  1.44it/s, bce_loss - 0.5063, l__recall - 0.3868, l__precision - 0.3755, l_f_beta - 0.3868, l__accuracy - 0.3868, label_accuracy - 0.1539, label_precision - 0.1539]
+train: 100%|██████████| 3586/3586 [39:40<00:00,  1.51it/s, bce_loss - 0.3795, l__recall - 0.578, l__precision - 0.5959, l_f_beta - 0.578, l__accuracy - 0.578, label_accuracy - 0.4131, label_precision - 0.4131]
+train: 100%|██████████| 3586/3586 [39:00<00:00,  1.53it/s, bce_loss - 0.3294, l__recall - 0.6403, l__precision - 0.6675, l_f_beta - 0.6403, l__accuracy - 0.6403, label_accuracy - 0.512, label_precision - 0.512]
+train: 100%|██████████| 3586/3586 [38:46<00:00,  1.54it/s, bce_loss - 0.3019, l__recall - 0.6676, l__precision - 0.6956, l_f_beta - 0.6676, l__accuracy - 0.6676, label_accuracy - 0.5448, label_precision - 0.5448]
+train: 100%|██████████| 3586/3586 [38:15<00:00,  1.56it/s, bce_loss - 0.2893, l__recall - 0.6857, l__precision - 0.7162, l_f_beta - 0.6857, l__accuracy - 0.6857, label_accuracy - 0.5652, label_precision - 0.5652]
+train: 100%|██████████| 3586/3586 [38:18<00:00,  1.56it/s, bce_loss - 0.2573, l__recall - 0.7215, l__precision - 0.7514, l_f_beta - 0.7215, l__accuracy - 0.7215, label_accuracy - 0.6137, label_precision - 0.6137]
+train: 100%|██████████| 3586/3586 [39:26<00:00,  1.52it/s, bce_loss - 0.2336, l__recall - 0.7512, l__precision - 0.7799, l_f_beta - 0.7512, l__accuracy - 0.7512, label_accuracy - 0.6573, label_precision - 0.6573]
+train: 100%|██████████| 3586/3586 [38:01<00:00,  1.57it/s, bce_loss - 0.2184, l__recall - 0.7681, l__precision - 0.7947, l_f_beta - 0.7681, l__accuracy - 0.7681, label_accuracy - 0.6819, label_precision - 0.6819]
+train: 100%|██████████| 3586/3586 [37:50<00:00,  1.58it/s, bce_loss - 0.209, l__recall - 0.7756, l__precision - 0.7998, l_f_beta - 0.7756, l__accuracy - 0.7756, label_accuracy - 0.6936, label_precision - 0.6936]
+train: 100%|██████████| 3586/3586 [38:01<00:00,  1.57it/s, bce_loss - 0.1935, l__recall - 0.7949, l__precision - 0.8181, l_f_beta - 0.7949, l__accuracy - 0.7949, label_accuracy - 0.7211, label_precision - 0.7211]
+train: 100%|██████████| 3586/3586 [38:07<00:00,  1.57it/s, bce_loss - 0.1825, l__recall - 0.8135, l__precision - 0.8353, l_f_beta - 0.8135, l__accuracy - 0.8135, label_accuracy - 0.7481, label_precision - 0.7481]
+train: 100%|██████████| 3586/3586 [37:58<00:00,  1.57it/s, bce_loss - 0.1656, l__recall - 0.8319, l__precision - 0.8541, l_f_beta - 0.8319, l__accuracy - 0.8319, label_accuracy - 0.7765, label_precision - 0.7765]
+train: 100%|██████████| 3586/3586 [38:06<00:00,  1.57it/s, bce_loss - 0.1561, l__recall - 0.846, l__precision - 0.865, l_f_beta - 0.846, l__accuracy - 0.846, label_accuracy - 0.7965, label_precision - 0.7965]
+train: 100%|██████████| 3586/3586 [38:07<00:00,  1.57it/s, bce_loss - 0.145, l__recall - 0.8572, l__precision - 0.8767, l_f_beta - 0.8572, l__accuracy - 0.8572, label_accuracy - 0.811, label_precision - 0.811]
+train: 100%|██████████| 3586/3586 [38:05<00:00,  1.57it/s, bce_loss - 0.1389, l__recall - 0.8615, l__precision - 0.8793, l_f_beta - 0.8615, l__accuracy - 0.8615, label_accuracy - 0.8205, label_precision - 0.8205]
+train: 100%|██████████| 3586/3586 [38:12<00:00,  1.56it/s, bce_loss - 0.133, l__recall - 0.8683, l__precision - 0.8854, l_f_beta - 0.8683, l__accuracy - 0.8683, label_accuracy - 0.8284, label_precision - 0.8284]
+train: 100%|██████████| 3586/3586 [38:08<00:00,  1.57it/s, bce_loss - 0.1216, l__recall - 0.8827, l__precision - 0.8981, l_f_beta - 0.8827, l__accuracy - 0.8827, label_accuracy - 0.8474, label_precision - 0.8474]
