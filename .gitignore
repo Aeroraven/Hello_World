@@ -13,3 +13,5 @@ LearningPytorch/learning-5-transfer-learning-preparations/util/run.py
 LearningPytorch/learning-5-transfer-learning-preparations/util/metrics.py
 LearningPytorch/learning-5-transfer-learning-preparations/util/save.py
 *.pyc
+ComputerGraphics/node_modules/*
+ComputerGraphics\node_modules\*
