@@ -1,5 +1,0 @@
-boy_heights = (rand(1,100)-0.5)*5+180;
-girl_heights = (rand(1,100)-0.5)*5+170;
-boy_weights = (rand(1,100)-0.5)*5+80;
-girl_weights = (rand(1,100)-0.5)*5+60;
-boy_y = ones(1,100);
