@@ -1,4 +1,7 @@
 package com.aeroraven.helloworld;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 class Test1{
 	public static void fun1() {
@@ -71,6 +74,41 @@ class Cat extends Animal{
 	}
 }
 
+abstract class Human{
+	protected String gender;
+	abstract public void setGender();
+	public void showGender() {
+		System.out.println(gender);
+	}
+}
+class Male extends Human{
+	public void setGender() {
+		gender = "Male";
+	}
+}
+class Female extends Human{
+	public void setGender() {
+		gender = "Female";
+	}
+}
+
+
+interface Organ{
+	public abstract void function();
+}
+
+class Hand implements Organ{
+	public void function() {
+		System.out.println("I can move");
+	}
+}
+
+class Foot implements Organ{
+	public void function() {
+		System.out.println("I can run");
+	}
+}
+
 public class HelloWorld {
 	public static void fun1() {
 		System.out.println("HelloWorld");
@@ -131,5 +169,55 @@ public class HelloWorld {
 		x13.bite();
 		x14.bite();
 		x15.bite2();
+		System.out.println("=====Abstract Classes & Abstract Methods=====");
+		Human x16 = new Male();
+		Human x17 = new Female();
+		x16.setGender();
+		x17.setGender();
+		x16.showGender();
+		x17.showGender();
+		System.out.println("=====Interface=====");
+		Hand x18 = new Hand();
+		Foot x19 = new Foot();
+		x18.function();
+		x19.function();
+		System.out.println("=====Enumeration=====");
+		enum color{
+			Red,Green,Blue
+		}
+		color rd = color.Red;
+		System.out.println(rd);
+		for(color i:color.values()) {
+			System.out.println(i);
+			System.out.println(i.ordinal());
+		}
+		System.out.println("=====ArrayList=====");
+		ArrayList<String> x20 = new ArrayList<String>();
+		x20.add("Apple");
+		x20.add("Peach");
+		x20.add("Orange");
+		x20.set(0,"Pineapple");
+		System.out.println(x20);
+		System.out.println(x20.get(1));
+		x20.remove(0);
+		System.out.println(x20);
+		System.out.println(x20.size());
+		System.out.println("=====ArrayList - Sorting=====");
+		ArrayList<Integer> x21 = new ArrayList<Integer>();
+		x21.add(5);
+		x21.add(7);
+		x21.add(6);
+		Collections.sort(x21);
+		for(int i:x21) {
+			System.out.println(i);
+		}
+		System.out.println("=====ArrayList - Converting=====");
+		Integer x22[]  = new Integer[x21.size()];
+		x21.toArray(x22);
+		for(Integer i:x22) {
+			System.out.println(i);
+		}
+		
+		
 	}
 } 
