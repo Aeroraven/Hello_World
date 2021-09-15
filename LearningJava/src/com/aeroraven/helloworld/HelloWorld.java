@@ -2,6 +2,11 @@ package com.aeroraven.helloworld;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.io.*;
+import java.lang.ArrayIndexOutOfBoundsException;
 
 class Test1{
 	public static void fun1() {
@@ -113,6 +118,11 @@ public class HelloWorld {
 	public static void fun1() {
 		System.out.println("HelloWorld");
 	}
+	public static <E> void printArr(E[] x) {
+		for(E i:x) {
+			System.out.println(i);
+		}
+	}
 	public static void main(String[] args) {
 		System.out.println("=====Class Constructor=====");
 		ClassConstructorDemo x = new ClassConstructorDemo();
@@ -217,7 +227,48 @@ public class HelloWorld {
 		for(Integer i:x22) {
 			System.out.println(i);
 		}
+		System.out.println("=====HashSet=====");
+		HashSet<String> x23 = new HashSet<String>();
+		x23.add("A");
+		x23.add("C");
+		x23.add("C");
+		x23.add("B");
+		System.out.println(x23);
+		x23.remove("C");
+		System.out.println(x23);
+		System.out.println(x23.contains("C"));
 		
-		
+		System.out.println("=====HashMap=====");
+		HashMap<String,String> x24 = new HashMap<String,String>();
+		x24.put("Pear", "Fruit");
+		x24.put("Apple", "Fruit");
+		x24.put("Tomato", "Vegetable");
+		x24.put("Carrot","Vegetable");
+		System.out.println(x24);
+		x24.remove("Carrot");
+		System.out.println(x24);
+		x24.replace("Pear", "Fruit2");
+		for(String i:x24.keySet()) {
+			System.out.println("Key="+i+", Val="+x24.get(i));
+		}
+		System.out.println("=====Iterator=====");
+		System.out.println(x20);
+		Iterator<String> it=x20.iterator();
+		while(it.hasNext()) {
+			System.out.println(it.next());
+		}
+		System.out.println("=====Generics=====");
+		Integer x25[]= {1,2,3,4,5};
+		String x26[]= {"A","B","C","D","E"};
+		HelloWorld.printArr(x25);
+		HelloWorld.printArr(x26);
+		System.out.println("=====Exception Handle=====");
+		Integer x27[]= {1,2,3};
+		try {
+			System.out.println(x27[3]);
+		}catch(ArrayIndexOutOfBoundsException e) {
+			System.out.println("Exception!");
+		}
+		System.out.println("End");
 	}
 } 
