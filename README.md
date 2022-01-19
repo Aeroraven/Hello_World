@@ -1,5 +1,7 @@
 ## Hello World
 This repository contains miscellaneous and useless tools.
+### License
+GNU GPL v2
 
 ### List of Tools
 - **Arknights Capsule**: A Python program that calculates the expectation for gaining a rare character in Arknights Gacha, using Markov chain.
